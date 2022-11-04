@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="160dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#dddddd">
+
+    <TextView
+        android:id="@+id/input_signup_confirmationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Confirmation code sent to email, please check and enter below."
+        android:layout_alignParentTop="true"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <EditText
+        android:id="@+id/input_signup_confirmation"
+        android:layout_width="238dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:background="#30ffffff"
+        android:ems="10"
+        android:hint="Confirmation Code"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/input_signup_confirmationText"
+    />
+
+    <Button
+        android:id="@+id/button_signup_submitConfirmation"
+        android:layout_width="144dp"
+        android:layout_height="36dp"
+        android:text="Confirm"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/input_signup_confirmation"
+    />
+
+</RelativeLayout>

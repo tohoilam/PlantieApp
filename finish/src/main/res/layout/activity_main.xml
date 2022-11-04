@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="#CDB275"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_plantie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plantie"
+            android:textSize="80sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/button_open_camera"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintVertical_bias=".4" />
+
+        <Button
+            android:id="@+id/button_open_camera"
+            android:layout_width="255dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="40dp"
+            android:text="Open Camera"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_plantie"
+            app:layout_constraintBottom_toTopOf="@+id/button_open_browse" />
+
+        <Button
+            android:id="@+id/button_open_browse"
+            android:layout_width="255dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="20dp"
+            android:text="Browse Plants"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_open_camera"
+            app:layout_constraintBottom_toTopOf="@+id/button_main_to_login_page" />
+
+        <Button
+            android:id="@+id/button_main_to_login_page"
+            android:layout_width="255dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="20dp"
+            android:text="Login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_open_browse"
+            app:layout_constraintBottom_toTopOf="@+id/button_main_to_sign_up_page" />
+
+        <Button
+            android:id="@+id/button_main_to_sign_up_page"
+            android:layout_width="255dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="20dp"
+            android:text="SignUp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_main_to_login_page"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
