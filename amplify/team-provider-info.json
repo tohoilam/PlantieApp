@@ -10,6 +10,11 @@
       "StackName": "amplify-plantie-dev-05638",
       "StackId": "arn:aws:cloudformation:ap-southeast-1:748329367518:stack/amplify-plantie-dev-05638/5221f280-5acf-11ed-bc25-0606de96d000",
       "AmplifyAppId": "d2s9xj50g7zouc"
+    },
+    "categories": {
+      "auth": {
+        "plantie83ff2691": {}
+      }
     }
   }
 }
