@@ -2,9 +2,10 @@
  
 ## Amplify Setup
 
-1. Download Amplify cli
+1. Download Amplify CLI
 2. Ask Ivan for Access Key and Secret Key
-3. Run `amplify pull --appId d2s9xj50g7zouc --envName dev`
+3. Delete .config folder in the **amplify** directory, if there is one
+4. Run `amplify pull --appId d2s9xj50g7zouc --envName dev`
     - Choose `AWS access keys`
     - Enter Access Key
     - Enter Secret Key
@@ -12,4 +13,4 @@
     - `Android Studio`
     - `android`
     - `app/src/main/res`
-    - `No`
+    - `Yes`
