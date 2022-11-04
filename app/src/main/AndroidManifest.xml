@@ -27,7 +27,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name=".AmplifyInit"
+        android:name="com.projects.plantie.AmplifyInit"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -36,27 +36,27 @@
         android:theme="@style/Theme.Plantie"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".CameraActivity"
+            android:name="com.projects.plantie.CameraActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.projects.plantie.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name="com.projects.plantie.SignUpActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name="com.projects.plantie.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

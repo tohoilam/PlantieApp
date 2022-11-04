@@ -1,12 +1,12 @@
-package org.tensorflow.lite.examples.plantie
+package com.projects.plantie
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import com.amplifyframework.core.Amplify
+import org.tensorflow.lite.examples.plantie.R
 
 class MainActivity : AppCompatActivity() {
     private var openCameraButton: Button? = null

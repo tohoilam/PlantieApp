@@ -7,7 +7,7 @@
   "frontend": "android",
   "android": {
     "config": {
-      "ResDir": "finish/src/main/res"
+      "ResDir": "app/src/main/res"
     }
   }
 }

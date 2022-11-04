@@ -15,4 +15,4 @@
  */
 
 rootProject.name = "Plantie"
-include ':finish'
+include ':app'

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.lite.examples.plantie.util
+package com.projects.plantie.util
 
 import android.content.Context
 import android.graphics.Bitmap

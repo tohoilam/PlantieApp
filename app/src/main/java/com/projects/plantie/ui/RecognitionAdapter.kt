@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.lite.examples.plantie.ui
+package com.projects.plantie.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.tensorflow.lite.examples.plantie.databinding.RecognitionItemBinding
-import org.tensorflow.lite.examples.plantie.viewmodel.Recognition
+import com.projects.plantie.viewmodel.Recognition
 
 class RecognitionAdapter(private val ctx: Context) :
     ListAdapter<Recognition, RecognitionViewHolder>(RecognitionDiffUtil()) {

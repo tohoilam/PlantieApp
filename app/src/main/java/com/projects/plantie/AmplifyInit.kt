@@ -1,4 +1,4 @@
-package org.tensorflow.lite.examples.plantie
+package com.projects.plantie
 
 import android.app.Application
 import android.util.Log

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.lite.examples.plantie
+package com.projects.plantie
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -40,10 +40,11 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import org.tensorflow.lite.examples.plantie.ml.FlowerModel
-import org.tensorflow.lite.examples.plantie.ui.RecognitionAdapter
-import org.tensorflow.lite.examples.plantie.util.YuvToRgbConverter
-import org.tensorflow.lite.examples.plantie.viewmodel.Recognition
-import org.tensorflow.lite.examples.plantie.viewmodel.RecognitionListViewModel
+import com.projects.plantie.ui.RecognitionAdapter
+import com.projects.plantie.util.YuvToRgbConverter
+import org.tensorflow.lite.examples.plantie.R
+import com.projects.plantie.viewmodel.Recognition
+import com.projects.plantie.viewmodel.RecognitionListViewModel
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.model.Model
 import java.util.concurrent.Executors

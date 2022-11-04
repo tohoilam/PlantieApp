@@ -1,9 +1,8 @@
-package org.tensorflow.lite.examples.plantie
+package com.projects.plantie
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -11,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.core.Amplify
+import org.tensorflow.lite.examples.plantie.R
 
 
 class SignUpActivity : AppCompatActivity() {
