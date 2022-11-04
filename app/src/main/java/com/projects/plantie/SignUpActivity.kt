@@ -68,7 +68,8 @@ class SignUpActivity : AppCompatActivity() {
             .build()
         Amplify.Auth.signUp(username, password, options,
             {
-            Log.i("AuthQuickStart", "Sign up succeeded: $it")
+                Log.i("AuthQuickStart", "Sign up succeeded: $it")
+                toLoginPage()
                 /*
                 popupWindow!!.showAtLocation(signUpButton, Gravity.CENTER, 0, 0)
                 confirmationButton = findViewById<Button>(R.id.button_signup_submitConfirmation)
