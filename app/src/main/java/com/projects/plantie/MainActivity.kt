@@ -10,6 +10,7 @@ import org.tensorflow.lite.examples.plantie.R
 
 class MainActivity : AppCompatActivity() {
     private var openCameraButton: Button? = null
+    private var openBrowseButton: Button? = null
     private var loginPageButton: Button? = null
     private var signUpPageButton: Button? = null
 
@@ -18,10 +19,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         openCameraButton = findViewById<Button>(R.id.button_open_camera)
+        openBrowseButton = findViewById<Button>(R.id.button_open_browse)
         loginPageButton = findViewById<Button>(R.id.button_main_to_login_page)
         signUpPageButton = findViewById<Button>(R.id.button_main_to_sign_up_page)
 
         openCameraButton!!.setOnClickListener{ openCameraPage() }
+        openBrowseButton!!.setOnClickListener{ openBrowsePage() }
         loginPageButton!!.setOnClickListener{ openLoginPage() }
         signUpPageButton!!.setOnClickListener{ openSignUpPage() }
 
@@ -34,6 +37,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun openCameraPage() {
         intent = Intent(this, CameraActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun openBrowsePage() {
+        intent = Intent(this, BrowseActivity::class.java)
         startActivity(intent)
     }
 
