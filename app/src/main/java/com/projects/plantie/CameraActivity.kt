@@ -70,15 +70,18 @@ typealias RecognitionListener = (recognition: List<Recognition>) -> Unit
  */
 class CameraActivity : AppCompatActivity() {
 
+//    private lateinit var viewBinding: ActivityMainBinding
+
     // CameraX variables
     private lateinit var preview: Preview // Preview use case, fast, responsive view of the camera
-    private lateinit var imageAnalyzer: ImageAnalysis // Analysis use case, for running ML code
+//    private lateinit var imageAnalyzer: ImageAnalysis // Analysis use case, for running ML code
+    private var imageCapture: ImageCapture? = null
     private lateinit var camera: Camera
     private val cameraExecutor = Executors.newSingleThreadExecutor()
 
-//    private lateinit var viewBinding: ActivityMainBinding
 
-    private var imageCapture: ImageCapture? = null
+
+
 
     // Views attachment
     private val resultRecyclerView by lazy {
@@ -181,16 +184,15 @@ class CameraActivity : AppCompatActivity() {
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
             // Preview
-            val preview = Preview.Builder()
+            preview = Preview.Builder()
                 .build()
                 .also {
                     it.setSurfaceProvider(viewFinder.surfaceProvider)
                 }
 
-            imageCapture = ImageCapture.Builder()
-                .build()
+            imageCapture = ImageCapture.Builder().build()
 
-            imageAnalyzer = ImageAnalysis.Builder()
+            val imageAnalyzer = ImageAnalysis.Builder()
                 // This sets the ideal size for the image to be analyse, CameraX will choose the
                 // the most suitable resolution which may not be exactly the same or hold the same
                 // aspect ratio
@@ -219,7 +221,7 @@ class CameraActivity : AppCompatActivity() {
                 // Bind use cases to camera - try to bind everything at once and CameraX will find
                 // the best combination.
                 camera = cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageAnalyzer, imageCapture
+                    this, cameraSelector, preview, imageCapture, imageAnalyzer
                 )
 
                 // Attach the preview to preview view, aka View Finder
@@ -243,8 +245,8 @@ class CameraActivity : AppCompatActivity() {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                println("change path?")
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
+//                println("change path?")
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Plantie-Image")
             }
         }
 

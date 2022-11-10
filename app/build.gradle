@@ -94,6 +94,11 @@ dependencies {
     implementation "androidx.camera:camera-view:$camerax_version"
     implementation 'androidx.activity:activity-ktx:1.6.1'
 
+//    def camerax_version = "1.1.0-beta01"
+    implementation "androidx.camera:camera-core:${camerax_version}"
+//    implementation "androidx.camera:camera-video:${camerax_version}"
+    implementation "androidx.camera:camera-extensions:${camerax_version}"
+
     // TODO 5: Optional GPU Delegates
     implementation 'org.tensorflow:tensorflow-lite-gpu:2.3.0'
 
