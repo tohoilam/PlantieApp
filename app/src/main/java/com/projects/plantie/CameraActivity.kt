@@ -25,14 +25,12 @@ import android.graphics.Matrix
 import android.os.Bundle
 import android.util.Log
 import android.util.Size
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.Camera
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageProxy
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
@@ -55,6 +53,7 @@ private const val MAX_RESULT_DISPLAY = 3 // Maximum number of results displayed
 private const val TAG = "Plantie" // Name for logging
 private const val REQUEST_CODE_PERMISSIONS = 999 // Return code after asking for permission
 private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA) // permission needed
+private var takePhotoButton: ImageButton? = null
 
 // Listener for the result of the ImageAnalyzer
 typealias RecognitionListener = (recognition: List<Recognition>) -> Unit
@@ -84,6 +83,11 @@ class CameraActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
+
+        // take photo button
+        takePhotoButton = findViewById<ImageButton>(R.id.camera_capture_button)
+        takePhotoButton!!.setOnClickListener{ takePhoto() }
+
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -206,6 +210,23 @@ class CameraActivity : AppCompatActivity() {
 
         }, ContextCompat.getMainExecutor(this))
     }
+
+    private fun takePhoto(){
+        println("take photo")
+
+//        val outputFileOptions = ImageCapture.OutputFileOptions.Builder(File(...)).build()
+//        imageCapture.takePicture(outputFileOptions, cameraExecutor,
+//            object : ImageCapture.OnImageSavedCallback {
+//                override fun onError(error: ImageCaptureException)
+//                {
+//                    // insert your code here.
+//                }
+//                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+//                    // insert your code here.
+//                }
+//            })
+    }
+
 
     private class ImageAnalyzer(ctx: Context, private val listener: RecognitionListener) :
         ImageAnalysis.Analyzer {
