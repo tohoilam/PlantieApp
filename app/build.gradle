@@ -50,12 +50,13 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
-    buildFeatures {
-        viewBinding true
-    }
+//    buildFeatures {
+//        viewBinding true
+//    }
 
-    // Enable data binding
+    // Enable data binding and view binding
     buildFeatures{
+        viewBinding true
         dataBinding = true
         mlModelBinding true
     }

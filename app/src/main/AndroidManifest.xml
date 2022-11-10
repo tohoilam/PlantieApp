@@ -26,6 +26,10 @@
     <!-- Specifying that the app will need camera permission -->
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <!-- Specifying that the app will need to write photos to storage -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
     <application
         android:name="com.projects.plantie.AmplifyInit"
         android:allowBackup="true"

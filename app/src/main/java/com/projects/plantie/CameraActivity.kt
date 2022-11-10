@@ -18,11 +18,14 @@ package com.projects.plantie
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
 import android.widget.Button
@@ -31,6 +34,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
+//import androidx.camera.core.ImageCapture
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
@@ -43,16 +47,19 @@ import com.projects.plantie.util.YuvToRgbConverter
 import org.tensorflow.lite.examples.plantie.R
 import com.projects.plantie.viewmodel.Recognition
 import com.projects.plantie.viewmodel.RecognitionListViewModel
+//import org.tensorflow.lite.examples.plantie.databinding.ActivityMainBinding
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.model.Model
 import java.util.concurrent.Executors
 import org.tensorflow.lite.gpu.CompatibilityList
+import java.text.SimpleDateFormat
+import java.util.*
 
 // Constants
 private const val MAX_RESULT_DISPLAY = 3 // Maximum number of results displayed
-private const val TAG = "Plantie" // Name for logging
-private const val REQUEST_CODE_PERMISSIONS = 999 // Return code after asking for permission
-private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA) // permission needed
+//private const val TAG = "Plantie" // Name for logging
+//private const val REQUEST_CODE_PERMISSIONS = 999 // Return code after asking for permission
+//private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA) // permission needed
 private var takePhotoButton: ImageButton? = null
 
 // Listener for the result of the ImageAnalyzer
@@ -69,6 +76,10 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var camera: Camera
     private val cameraExecutor = Executors.newSingleThreadExecutor()
 
+//    private lateinit var viewBinding: ActivityMainBinding
+
+    private var imageCapture: ImageCapture? = null
+
     // Views attachment
     private val resultRecyclerView by lazy {
         findViewById<RecyclerView>(R.id.recognitionResults) // Display the result of analysis
@@ -82,12 +93,9 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        viewBinding = ActivityMainBinding.inflate(layoutInflater)
+//        setContentView(viewBinding.root)
         setContentView(R.layout.activity_camera)
-
-        // take photo button
-        takePhotoButton = findViewById<ImageButton>(R.id.camera_capture_button)
-        takePhotoButton!!.setOnClickListener{ takePhoto() }
-
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -114,6 +122,11 @@ class CameraActivity : AppCompatActivity() {
                 viewAdapter.submitList(it)
             }
         )
+
+        // take photo button
+        takePhotoButton = findViewById<ImageButton>(R.id.image_capture_button)
+        takePhotoButton!!.setOnClickListener{ takePhoto() }
+//        viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
 
     }
 
@@ -167,7 +180,14 @@ class CameraActivity : AppCompatActivity() {
             // Used to bind the lifecycle of cameras to the lifecycle owner
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
-            preview = Preview.Builder()
+            // Preview
+            val preview = Preview.Builder()
+                .build()
+                .also {
+                    it.setSurfaceProvider(viewFinder.surfaceProvider)
+                }
+
+            imageCapture = ImageCapture.Builder()
                 .build()
 
             imageAnalyzer = ImageAnalysis.Builder()
@@ -199,7 +219,7 @@ class CameraActivity : AppCompatActivity() {
                 // Bind use cases to camera - try to bind everything at once and CameraX will find
                 // the best combination.
                 camera = cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageAnalyzer
+                    this, cameraSelector, preview, imageAnalyzer, imageCapture
                 )
 
                 // Attach the preview to preview view, aka View Finder
@@ -213,18 +233,49 @@ class CameraActivity : AppCompatActivity() {
 
     private fun takePhoto(){
         println("take photo")
+        // Get a stable reference of the modifiable image capture use case
+        val imageCapture = imageCapture ?: return
 
-//        val outputFileOptions = ImageCapture.OutputFileOptions.Builder(File(...)).build()
-//        imageCapture.takePicture(outputFileOptions, cameraExecutor,
-//            object : ImageCapture.OnImageSavedCallback {
-//                override fun onError(error: ImageCaptureException)
-//                {
-//                    // insert your code here.
-//                }
-//                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-//                    // insert your code here.
-//                }
-//            })
+        // Create time stamped name and MediaStore entry.
+        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
+            .format(System.currentTimeMillis())
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                println("change path?")
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
+            }
+        }
+
+        // Create output options object which contains file + metadata
+        val outputOptions = ImageCapture.OutputFileOptions
+            .Builder(contentResolver,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                contentValues)
+            .build()
+        println(outputOptions)
+
+        // Set up image capture listener, which is triggered after photo has
+        // been taken
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onError(exc: ImageCaptureException) {
+                    println("failed to take photo")
+                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                }
+
+                override fun
+                        onImageSaved(output: ImageCapture.OutputFileResults){
+                    val msg = "Photo capture succeeded: ${output.savedUri}"
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, msg)
+                    println("saving photo")
+                }
+            }
+        )
     }
 
 
@@ -320,6 +371,21 @@ class CameraActivity : AppCompatActivity() {
             )
         }
 
+    }
+
+    companion object {
+        private const val TAG = "Plantie"
+        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        private val REQUIRED_PERMISSIONS =
+            mutableListOf (
+                Manifest.permission.CAMERA,
+//                Manifest.permission.RECORD_AUDIO
+            ).apply {
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                }
+            }.toTypedArray()
     }
 
 }
