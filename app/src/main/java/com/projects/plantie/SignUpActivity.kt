@@ -2,11 +2,14 @@ package com.projects.plantie
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.amazonaws.services.cognitoidentityprovider.model.UsernameExistsException
 import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.core.Amplify
@@ -60,7 +63,10 @@ class SignUpActivity : AppCompatActivity() {
         val password = passwordEditText!!.text.toString()
         val passwordCheck = passwordCheckEditText!!.text.toString()
 
-        //TODO password check be4 invoking below
+        if (password != passwordCheck){
+            Toast.makeText(getApplicationContext(), "Password not match", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         //amplify signup
         val options = AuthSignUpOptions.builder()
@@ -69,6 +75,9 @@ class SignUpActivity : AppCompatActivity() {
         Amplify.Auth.signUp(username, password, options,
             {
                 Log.i("AuthQuickStart", "Sign up succeeded: $it")
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(getApplicationContext(), "Sign up succeeded, please check inbox for the confirmation email", Toast.LENGTH_SHORT).show()
+                }
                 toLoginPage()
                 /*
                 popupWindow!!.showAtLocation(signUpButton, Gravity.CENTER, 0, 0)
@@ -88,7 +97,19 @@ class SignUpActivity : AppCompatActivity() {
                     )
                 }*/
             },
-            { Log.e ("AuthQuickStart", "Sign up failed", it) }
+            {
+                Log.i("AuthException", it.message.toString())
+                //Log.e ("AuthQuickStart", "Sign up failed", it)
+                var msg = ""
+                when (it.message){
+                    "Username already exists in the system." -> msg = "Username exists, please try with another username"
+                    "The password given is invalid." -> msg = "Invalid password, 8 characters or longer is required"
+                    else -> msg = "Fatal error"
+                }
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                }
+            }
         )
     }
 
