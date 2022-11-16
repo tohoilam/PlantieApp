@@ -25,12 +25,15 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.location.LocationManager
+import android.location.LocationRequest
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -42,12 +45,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationListener
+import com.google.android.gms.location.LocationServices
 import com.projects.plantie.ui.RecognitionAdapter
 import com.projects.plantie.util.YuvToRgbConverter
 import com.projects.plantie.viewmodel.Recognition
 import com.projects.plantie.viewmodel.RecognitionListViewModel
 import org.tensorflow.lite.examples.plantie.R
 import org.tensorflow.lite.examples.plantie.ml.FlowerModel
+//import com.projects.plantie.Location.getLocation
 import org.tensorflow.lite.gpu.CompatibilityList
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.model.Model
@@ -59,6 +66,7 @@ import java.util.concurrent.Executors
 // Constants
 private const val MAX_RESULT_DISPLAY = 3 // Maximum number of results displayed
 private var takePhotoButton: ImageButton? = null
+private var getLocationButton: Button? = null
 
 // Listener for the result of the ImageAnalyzer
 typealias RecognitionListener = (recognition: List<Recognition>) -> Unit
@@ -77,6 +85,11 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var camera: Camera
     private val cameraExecutor = Executors.newSingleThreadExecutor()
 
+//    Location Manager
+    private lateinit var locationManager: LocationManager
+    private val locationPermissionCode = 2
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
     // Views attachment
     private val resultRecyclerView by lazy {
         findViewById<RecyclerView>(R.id.recognitionResults) // Display the result of analysis
@@ -88,8 +101,10 @@ class CameraActivity : AppCompatActivity() {
     // Contains the recognition result. Since  it is a viewModel, it will survive screen rotations
     private val recogViewModel: RecognitionListViewModel by viewModels()
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this!!)
 //        viewBinding = ActivityMainBinding.inflate(layoutInflater)
 //        setContentView(viewBinding.root)
         setContentView(R.layout.activity_camera)
@@ -123,6 +138,11 @@ class CameraActivity : AppCompatActivity() {
         // take photo button
         takePhotoButton = findViewById<ImageButton>(R.id.image_capture_button)
         takePhotoButton!!.setOnClickListener{ takePhoto() }
+
+        // get Location Button for testing
+        // TODO delete the button after testing
+        getLocationButton = findViewById<Button>(R.id.get_location_button)
+        getLocationButton!!.setOnClickListener{ getLastKnownLocation() }
 //        viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
 
     }
@@ -276,11 +296,64 @@ class CameraActivity : AppCompatActivity() {
         )
     }
 
+//    TODO get location
+//    private fun getLocation(): String {
+//        println("get location")
+//        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
+//        var location: Location? = null
+//        val gps = DoubleArray(2)
+//        if (location != null) {
+//            gps[0] = location.latitude
+//            gps[1] = location.longtitude
+//            Log.e("gpsLat",gps[0].toString())
+//            Log.e("gpsLong",gps[1].toString())
+//
+//        }
+//    }
+
+    fun getLastKnownLocation() {
+        println("get LastKnownLocation")
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location->
+                if (location != null) {
+                    val gps = DoubleArray(2)
+                    gps[0] = location.latitude
+                    gps[1] = location.longitude
+                    println(gps[0])
+                    println(gps[1])
+                    Log.e("gpsLat",gps[0].toString())
+                    Log.e("gpsLong",gps[1].toString())
+                }
+                else {
+                    println("no location find")
+                }
+            }
+
+    }
+
 //    TODO recognise the photo and pass the parameters to upload
     private fun upload_to_database(photo_path: Uri?){
 
         val time = SimpleDateFormat(FILENAME_FORMAT).format(System.currentTimeMillis())
-
+//        val location = getLocation()
 //        upload(label, time, long, lat, photo_path)
     }
 
@@ -386,6 +459,8 @@ class CameraActivity : AppCompatActivity() {
         private val REQUIRED_PERMISSIONS =
             mutableListOf (
                 Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
             ).apply {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
