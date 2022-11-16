@@ -16,11 +16,20 @@
 
 package com.projects.plantie.viewmodel
 
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.projects.plantie.MainActivity
+import com.projects.plantie.SignUpActivity
+import org.tensorflow.lite.examples.plantie.R
 
-class RecognitionListViewModel : ViewModel() {
+class RecognitionListViewModel : ViewModel(){
 
     // This is a LiveData field. Choosing this structure because the whole list tend to be updated
     // at once in ML and not individual elements. Updating this once for the entire list makes
@@ -48,4 +57,8 @@ data class Recognition(val label:String, val confidence:Float) {
     val probabilityString = String.format("%.1f%%", confidence * 100.0f)
     // Replace _ with a blank space for the flower name
     val out_label = label.replace('_', ' ')
+
+    fun onClick(){
+        println("Redirecting to Page: ${ out_label }")
+    }
 }
