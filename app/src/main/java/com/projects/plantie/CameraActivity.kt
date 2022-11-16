@@ -28,6 +28,8 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
@@ -42,6 +44,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.storage.StorageAccessLevel
+import com.amplifyframework.storage.options.StorageUploadFileOptions
 import com.projects.plantie.ui.RecognitionAdapter
 import com.projects.plantie.util.YuvToRgbConverter
 import com.projects.plantie.viewmodel.Recognition
@@ -51,6 +56,7 @@ import org.tensorflow.lite.examples.plantie.ml.FlowerModel
 import org.tensorflow.lite.gpu.CompatibilityList
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.model.Model
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Executors
@@ -276,12 +282,28 @@ class CameraActivity : AppCompatActivity() {
         )
     }
 
-//    TODO recognise the photo and pass the parameters to upload
     private fun upload_to_database(photo_path: Uri?){
-
         val time = SimpleDateFormat(FILENAME_FORMAT).format(System.currentTimeMillis())
+        val options = StorageUploadFileOptions.builder()
+            .accessLevel(StorageAccessLevel.PRIVATE)
+            .build()
 
-//        upload(label, time, long, lat, photo_path)
+        if (photo_path != null) {
+            photo_path.path?.let { File(it) }?.let {
+                Amplify.Storage.uploadFile(time, it, options,
+                    {
+                        Log.i("AmplifyS3", "Successfully uploaded: ${it.key}")
+                        var msg = "Image uploaded"
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    {
+                        Log.e("AmplifyS3", "Upload failed", it)
+                    }
+                )
+            }
+        }
     }
 
 
