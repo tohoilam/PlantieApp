@@ -22,7 +22,7 @@
             name="recognitionItem"
             type="com.projects.plantie.viewmodel.Recognition" />
     </data>
-    <!--        TODO to link the text to information pages-->
+    <!--        TODO to link the text to information pages  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
