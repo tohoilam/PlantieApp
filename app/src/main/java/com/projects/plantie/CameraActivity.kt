@@ -297,45 +297,15 @@ class CameraActivity : AppCompatActivity() {
         )
     }
 
-//    TODO get location
-//    private fun getLocation(): String {
-//        println("get location")
-//        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
-//        var location: Location? = null
-//        val gps = DoubleArray(2)
-//        if (location != null) {
-//            gps[0] = location.latitude
-//            gps[1] = location.longtitude
-//            Log.e("gpsLat",gps[0].toString())
-//            Log.e("gpsLong",gps[1].toString())
-//
-//        }
-//    }
-
-    fun getLastKnownLocation() {
+    fun getLastKnownLocation(): DoubleArray {
         println("get LastKnownLocation")
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
+        val gps = DoubleArray(2)
+        gps[0] = 0.0
+        gps[1] = 0.1
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location->
                 if (location != null) {
-                    val gps = DoubleArray(2)
+
                     gps[0] = location.latitude
                     gps[1] = location.longitude
                     println(gps[0])
@@ -349,14 +319,17 @@ class CameraActivity : AppCompatActivity() {
                     println("no location find")
                 }
             }
-
+        return gps
     }
 
 //    TODO recognise the photo and pass the parameters to upload
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun uploadToDatabase(photo_path: Uri?){
-
+        println("Uploading to DB")
         val time = SimpleDateFormat(FILENAME_FORMAT).format(System.currentTimeMillis())
+        val gps = getLastKnownLocation()
+        val lat = gps[0]
+        val long = gps[1]
 
         //val inputStream = photo_path?.let { contentResolver.openInputStream(it) }
             //val pic = File(photo_path?.path)
@@ -366,8 +339,6 @@ class CameraActivity : AppCompatActivity() {
         //val lat: Double = exif.getAttributeDouble("TAG_GPS_DEST_LATITUDE",-1)
         //val lat= exif?.getAttribute("TAG_GPS_DEST_LATITUDE")
         //val long=exif.getAttribute("TAG_GPS_DEST_LONGITUDE")
-
-
 
 //        upload(label, time, long, lat, photo_path)
     }
@@ -380,7 +351,6 @@ class CameraActivity : AppCompatActivity() {
         // Initializing the flowerModel by lazy so that it runs in the same thread when the process
         // method is called.
         private val flowerModel: FlowerModel by lazy{
-
             // Optional GPU acceleration
             val compatList = CompatibilityList()
 
