@@ -299,7 +299,7 @@ class CameraActivity : AppCompatActivity() {
 
     fun getLastKnownLocation(): DoubleArray {
         println("get LastKnownLocation")
-        val gps = DoubleArray(2)
+        var gps = DoubleArray(2)
         gps[0] = 0.0
         gps[1] = 0.1
         fusedLocationClient.lastLocation
@@ -330,6 +330,8 @@ class CameraActivity : AppCompatActivity() {
         val gps = getLastKnownLocation()
         val lat = gps[0]
         val long = gps[1]
+
+
 
         //val inputStream = photo_path?.let { contentResolver.openInputStream(it) }
             //val pic = File(photo_path?.path)
