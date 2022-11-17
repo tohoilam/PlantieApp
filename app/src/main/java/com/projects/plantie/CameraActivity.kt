@@ -64,8 +64,9 @@ import java.util.*
 import java.util.concurrent.Executors
 
 
-
 // Constants
+private var flower_label: String = ""    // TODO global variable flower label
+
 private const val MAX_RESULT_DISPLAY = 3 // Maximum number of results displayed
 private var takePhotoButton: ImageButton? = null
 private var getLocationButton: Button? = null
@@ -323,6 +324,8 @@ class CameraActivity : AppCompatActivity() {
         return gps
     }
 
+
+
 //    TODO recognise the photo and pass the parameters to upload
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun uploadToDatabase(photo_path: Uri?){
@@ -331,8 +334,9 @@ class CameraActivity : AppCompatActivity() {
         val gps = getLastKnownLocation()
         val lat = gps[0]
         val long = gps[1]
+        val label = flower_label  // TODO global variable flower label
 
-
+        //println(gps, )
 
         //val inputStream = photo_path?.let { contentResolver.openInputStream(it) }
             //val pic = File(photo_path?.path)
@@ -381,6 +385,8 @@ class CameraActivity : AppCompatActivity() {
                 .probabilityAsCategoryList.apply {
                     sortByDescending { it.score } // Sort with highest confidence first
                 }.take(MAX_RESULT_DISPLAY) // take the top results
+
+            flower_label = outputs[0].label
 
             // Converting the top probability items into a list of recognitions
             for (output in outputs) {
