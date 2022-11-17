@@ -19,6 +19,7 @@ package com.projects.plantie
 //import androidx.camera.core.ImageCapture
 //import org.tensorflow.lite.examples.plantie.databinding.ActivityMainBinding
 //import com.projects.plantie.Location.getLocation
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -27,7 +28,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.location.LocationManager
-import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -66,7 +66,7 @@ import java.util.concurrent.Executors
 
 // Constants
 private var flower_label: String = ""    // TODO global variable flower label
-
+//TODO current_flower_label
 private const val MAX_RESULT_DISPLAY = 3 // Maximum number of results displayed
 private var takePhotoButton: ImageButton? = null
 private var getLocationButton: Button? = null
@@ -324,6 +324,21 @@ class CameraActivity : AppCompatActivity() {
         return gps
     }
 
+    //get real path!!!!!!!
+    private fun getRealPathFromURI(contentURI: Uri): String? {
+        val result: String?
+        val cursor = contentResolver.query(contentURI, null, null, null, null)
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.path
+        } else {
+            cursor.moveToFirst()
+            val idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+            result = cursor.getString(idx)
+            cursor.close()
+        }
+        return result
+    }
+
 
 
 //    TODO recognise the photo and pass the parameters to upload
@@ -336,8 +351,25 @@ class CameraActivity : AppCompatActivity() {
         val long = gps[1]
         val label = flower_label  // TODO global variable flower label
 
-        //println(gps, )
+        //val model = FlowerModel.newInstance(applicationContext)
+        // Creates inputs for reference.
+        //val image = TensorImage.fromBitmap(bitmap)
+        // Runs model inference and gets result.
+        //val outputs = model.process(image)
+        //val probability = outputs.probabilityAsCategoryList
+        // Releases model resources if no longer used.
+        //model.close()
 
+
+        val realpath = photo_path?.let { getRealPathFromURI(it) }
+
+
+        //TODO re-ana
+        //var pic = File(realpath)
+        //val picana= ImageAnalyzer(applicationContext, )
+
+
+        //exif
         //val inputStream = photo_path?.let { contentResolver.openInputStream(it) }
             //val pic = File(photo_path?.path)
             //val exif = ExifInterface(path2.toString())
@@ -347,7 +379,7 @@ class CameraActivity : AppCompatActivity() {
         //val lat= exif?.getAttribute("TAG_GPS_DEST_LATITUDE")
         //val long=exif.getAttribute("TAG_GPS_DEST_LONGITUDE")
 
-//        upload(label, time, long, lat, photo_path)
+//        upload(label, time, long, lat, realpath)
     }
 
 
@@ -387,6 +419,8 @@ class CameraActivity : AppCompatActivity() {
                 }.take(MAX_RESULT_DISPLAY) // take the top results
 
             flower_label = outputs[0].label
+
+            //TODO current
 
             // Converting the top probability items into a list of recognitions
             for (output in outputs) {
