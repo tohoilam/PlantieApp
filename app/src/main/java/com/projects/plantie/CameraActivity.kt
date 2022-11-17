@@ -18,6 +18,7 @@ package com.projects.plantie
 
 //import androidx.camera.core.ImageCapture
 //import org.tensorflow.lite.examples.plantie.databinding.ActivityMainBinding
+//import com.projects.plantie.Location.getLocation
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -26,7 +27,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.location.LocationManager
-import android.location.LocationRequest
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -37,6 +38,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -46,7 +48,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationServices
 import com.projects.plantie.ui.RecognitionAdapter
 import com.projects.plantie.util.YuvToRgbConverter
@@ -54,10 +55,10 @@ import com.projects.plantie.viewmodel.Recognition
 import com.projects.plantie.viewmodel.RecognitionListViewModel
 import org.tensorflow.lite.examples.plantie.R
 import org.tensorflow.lite.examples.plantie.ml.FlowerModel
-//import com.projects.plantie.Location.getLocation
 import org.tensorflow.lite.gpu.CompatibilityList
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.model.Model
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Executors
@@ -290,7 +291,7 @@ class CameraActivity : AppCompatActivity() {
                     Log.d(TAG, msg)
                     println("saving photo")
                     val photo_path = output.savedUri
-                    upload_to_database(photo_path)
+                    uploadToDatabase(photo_path)
                 }
             }
         )
@@ -341,6 +342,8 @@ class CameraActivity : AppCompatActivity() {
                     println(gps[1])
                     Log.e("gpsLat",gps[0].toString())
                     Log.e("gpsLong",gps[1].toString())
+
+
                 }
                 else {
                     println("no location find")
@@ -350,10 +353,22 @@ class CameraActivity : AppCompatActivity() {
     }
 
 //    TODO recognise the photo and pass the parameters to upload
-    private fun upload_to_database(photo_path: Uri?){
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun uploadToDatabase(photo_path: Uri?){
 
         val time = SimpleDateFormat(FILENAME_FORMAT).format(System.currentTimeMillis())
-//        val location = getLocation()
+
+        //val inputStream = photo_path?.let { contentResolver.openInputStream(it) }
+            //val pic = File(photo_path?.path)
+            //val exif = ExifInterface(path2.toString())
+        //val exif = inputStream?.let { ExifInterface(it) }
+        //val timme = exif?.getAttribute("TAG_DATETIME")
+        //val lat: Double = exif.getAttributeDouble("TAG_GPS_DEST_LATITUDE",-1)
+        //val lat= exif?.getAttribute("TAG_GPS_DEST_LATITUDE")
+        //val long=exif.getAttribute("TAG_GPS_DEST_LONGITUDE")
+
+
+
 //        upload(label, time, long, lat, photo_path)
     }
 

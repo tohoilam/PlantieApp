@@ -56,7 +56,7 @@ data class Recognition(val label:String, val confidence:Float) {
     // Output probability as a string to enable easy data binding
     val probabilityString = String.format("%.1f%%", confidence * 100.0f)
     // Replace _ with a blank space for the flower name
-    val out_label = label.replace('_', ' ')
+    val out_label = label.replace('_', ' ').capitalize()
 
     fun onClick(){
         println("Redirecting to Page: ${ out_label }")

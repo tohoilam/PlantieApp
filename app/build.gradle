@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -99,6 +101,10 @@ dependencies {
     implementation "androidx.camera:camera-core:${camerax_version}"
 //    implementation "androidx.camera:camera-video:${camerax_version}"
     implementation "androidx.camera:camera-extensions:${camerax_version}"
+
+    //exif
+    implementation("androidx.exifinterface:exifinterface:1.3.5")
+    implementation("com.android.support:appcompat-v7:28.0.0")
 
     // TODO 5: Optional GPU Delegates
     implementation 'org.tensorflow:tensorflow-lite-gpu:2.3.0'
