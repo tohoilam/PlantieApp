@@ -64,6 +64,7 @@ import java.util.*
 import java.util.concurrent.Executors
 
 
+
 // Constants
 private const val MAX_RESULT_DISPLAY = 3 // Maximum number of results displayed
 private var takePhotoButton: ImageButton? = null
