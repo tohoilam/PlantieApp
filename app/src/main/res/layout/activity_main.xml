@@ -69,6 +69,17 @@
             app:layout_constraintTop_toBottomOf="@+id/button_main_to_login_page"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+        <Button
+            android:id="@+id/button_main_logout"
+            android:layout_width="255dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="20dp"
+            android:text="Logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_main_to_login_page" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
