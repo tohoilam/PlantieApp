@@ -31,6 +31,8 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
@@ -47,6 +49,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.storage.StorageAccessLevel
+import com.amplifyframework.storage.options.StorageUploadFileOptions
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.projects.plantie.ui.RecognitionAdapter
@@ -293,7 +298,7 @@ class CameraActivity : AppCompatActivity() {
                     Log.d(TAG, msg)
                     println("saving photo")
                     val photo_path = output.savedUri
-                    uploadToDatabase(photo_path)
+                    uploadToDatabase(photo_path, name)
                 }
             }
         )
@@ -343,9 +348,9 @@ class CameraActivity : AppCompatActivity() {
 
 //    TODO recognise the photo and pass the parameters to upload
     @RequiresApi(Build.VERSION_CODES.Q)
-    private fun uploadToDatabase(photo_path: Uri?){
+    private fun uploadToDatabase(photo_path: Uri?, time: String?){
         println("Uploading to DB")
-        val time = SimpleDateFormat(FILENAME_FORMAT).format(System.currentTimeMillis())
+        //val time = SimpleDateFormat(FILENAME_FORMAT).format(System.currentTimeMillis())
         val gps = getLastKnownLocation()
         val lat = gps[0]
         val long = gps[1]
@@ -362,7 +367,37 @@ class CameraActivity : AppCompatActivity() {
 
 
         val realpath = photo_path?.let { getRealPathFromURI(it) }
+        Log.i("uploadToDatabase", realpath.toString())
+        val options = StorageUploadFileOptions.builder()
+            .accessLevel(StorageAccessLevel.PRIVATE)
+            .build()
 
+        if (realpath != null) {
+            if (time != null) {
+                Amplify.Storage.uploadFile(time, File(realpath), options,
+                    {
+                        Log.i("AmplifyS3", "Successfully uploaded: ${it.key}")
+                        var msg = "Image uploaded"
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    {
+                        Log.e("AmplifyS3", "Upload failed", it)
+                        Log.i("S3Exception", it.message.toString())
+                        Log.i("S3Exception", it.cause.toString())
+                        var msg = ""
+                        msg = when (it.message){
+                            "Something went wrong with your AWS S3 Storage upload file operation" -> "Sync with cloud failed. Please login if you still haven't"
+                            else -> "Fatal error"
+                        }
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                )
+            }
+        }
 
         //TODO re-ana
         //var pic = File(realpath)

@@ -39,5 +39,11 @@
                 "EMAIL"
             ]
         }
+    },
+    "S3TransferUtility": {
+        "Default": {
+            "Bucket": "plantie05638-dev",
+            "Region": "ap-southeast-1"
+        }
     }
 }
