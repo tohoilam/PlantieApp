@@ -10,6 +10,9 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.storage.StorageAccessLevel
+import com.amplifyframework.storage.options.StorageListOptions
 import org.tensorflow.lite.examples.plantie.R
 
 class BrowseActivity : AppCompatActivity() {
@@ -20,6 +23,32 @@ class BrowseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_browse)
         gridLayout = findViewById(R.id.browse_box)
+
+        Amplify.Auth.fetchAuthSession(
+            {
+                Log.i("AmplifyCheckLogin", "Auth session = $it")
+                runOnUiThread(Runnable {
+                    if (it.isSignedIn){
+                        val options = StorageListOptions.builder()
+                            .accessLevel(StorageAccessLevel.PRIVATE)
+                            .targetIdentityId("otherUserID")
+                            .build()
+
+                        Amplify.Storage.list("", options,
+                            { result ->
+                                result.items.forEach { item ->
+                                    Log.i("AmplifyS3", "Item: ${item.key}")
+                                }
+                            },
+                            { Log.e("AmplifyS3", "List failure", it) }
+                        )
+                    }else{ //cloud not available, check local instead
+
+                    }
+                })
+            },
+            { error -> Log.e("AmplifyCheckLogin", "Failed to fetch auth session", error) }
+        )
 
         val cardList = arrayListOf<CardModel>(CardModel(R.drawable.lilyvalley, "LilyValley", "03 Jan 2022, 03:45"),
                                                 CardModel(R.drawable.bluebell, "Bluebell", "03 Jan 2022, 03:45"),
