@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.projects.plantie.MainActivity"
-    android:background="#CDB275"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,54 +15,80 @@
             android:id="@+id/text_plantie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/aldrich"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="15"
+            android:shadowDy="15"
+            android:shadowRadius="4"
             android:text="Plantie"
+            android:textColor="#2A5877"
             android:textSize="80sp"
+            app:layout_constraintBottom_toTopOf="@+id/button_open_camera"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/button_open_camera"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintVertical_bias=".4" />
+            app:layout_constraintVertical_bias=".4"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_open_camera"
             android:layout_width="255dp"
             android:layout_height="64dp"
             android:layout_marginTop="40dp"
             android:text="Open Camera"
+            android:drawableLeft="@drawable/ic_baseline_photo_camera_24"
+            android:paddingStart="60dp"
+            android:paddingEnd="50dp"
+            android:textColor="@color/white"
+            android:background="@drawable/customisedbtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_plantie"
             app:layout_constraintBottom_toTopOf="@+id/button_open_browse" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_open_browse"
             android:layout_width="255dp"
             android:layout_height="64dp"
             android:layout_marginTop="20dp"
             android:text="Browse Plants"
+            android:drawableLeft="@drawable/ic_baseline_bookmark_24"
+            android:paddingStart="60dp"
+            android:paddingEnd="40dp"
+            android:textColor="@color/white"
+            android:background="@drawable/bluecustomisedbtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_open_camera"
             app:layout_constraintBottom_toTopOf="@+id/button_main_to_login_page" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_main_to_login_page"
             android:layout_width="255dp"
             android:layout_height="64dp"
             android:layout_marginTop="20dp"
             android:text="Login"
+            android:drawableLeft="@drawable/ic_baseline_person_24"
+            android:paddingStart="60dp"
+            android:paddingEnd="50dp"
+            android:textColor="@color/white"
+            android:background="@drawable/customisedbtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_open_browse"
             app:layout_constraintBottom_toTopOf="@+id/button_main_to_sign_up_page" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_main_to_sign_up_page"
             android:layout_width="255dp"
             android:layout_height="64dp"
             android:layout_marginTop="20dp"
             android:text="SignUp"
+            android:drawableLeft="@drawable/ic_baseline_assignment_24"
+            android:paddingStart="60dp"
+            android:paddingEnd="50dp"
+            android:textColor="@color/white"
+            android:background="@drawable/bluecustomisedbtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_main_to_login_page"

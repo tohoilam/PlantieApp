@@ -5,7 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#CDB275"
     android:padding="10sp"
     android:fillViewport="true"
     android:orientation="vertical"
@@ -13,10 +12,11 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="121dp"
+        android:layout_height="35dp"
         android:layout_margin="10sp"
+        app:cardBackgroundColor="#CDB275"
         app:cardCornerRadius="10sp"
-        app:cardBackgroundColor="@color/white">
+        card_view:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,12 +24,33 @@
 
             <TextView
                 android:id="@+id/text_browse"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Browse"
-                android:textSize="48sp"
-                card_view:layout_editor_absoluteX="169dp"
-                card_view:layout_editor_absoluteY="48dp" />
+                android:layout_width="306dp"
+                android:layout_height="33dp"
+                android:background="#CDB275"
+                android:fontFamily="@font/aldrich"
+                android:gravity="center_horizontal"
+                android:text="Saved Plants"
+                android:textColor="#000"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.757"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ping_image"
+                android:layout_width="24dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="84dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/pin" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -42,24 +63,26 @@
 <!--        android:layout_height="wrap_content"-->
 <!--        android:fillViewport="true">-->
 
-        <GridLayout
-            android:id="@+id/browse_box"
+    <GridLayout
+        android:id="@+id/browse_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:numColumns="auto_fit"
+        android:rowCount="1"
+        android:stretchMode="columnWidth">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:stretchMode="columnWidth"
-            android:numColumns="auto_fit"
-            android:rowCount="2"
-            android:columnCount="2" >
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
 
+    </GridLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-
-        </GridLayout>
-<!--    </ScrollView>-->
+    <!--    </ScrollView>-->
 
 </LinearLayout>

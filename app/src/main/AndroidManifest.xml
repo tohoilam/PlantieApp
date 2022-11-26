@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name="com.projects.plantie.BrowseActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.Plantie.BackgroundImageStyle">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -43,27 +44,34 @@
         </activity>
         <activity
             android:name="com.projects.plantie.LoginActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.Plantie.BackgroundImageStyle">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name="com.projects.plantie.SignUpActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.Plantie.BackgroundImageStyle">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name="com.projects.plantie.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Plantie.BackgroundImageStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
