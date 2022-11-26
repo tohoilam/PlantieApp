@@ -415,6 +415,20 @@ class CameraActivity : AppCompatActivity() {
         //val long=exif.getAttribute("TAG_GPS_DEST_LONGITUDE")
 
 //        upload(label, time, long, lat, realpath)
+
+        //val options = StorageListOptions.builder()
+        //    .accessLevel(StorageAccessLevel.PRIVATE)
+        //    .targetIdentityId("otherUserID")
+        //    .build()
+        //
+        //Amplify.Storage.list("", options,
+        //    { result ->
+        //        result.items.forEach { item ->
+        //            Log.i("AmplifyS3", "Item: ${item.key}")
+        //        }
+        //    },
+        //    { Log.e("AmplifyS3", "List failure", it) }
+        //)
     }
 
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import com.amplifyframework.core.Amplify
@@ -35,15 +36,26 @@ class MainActivity : AppCompatActivity() {
         logoutButton!!.setOnClickListener{ logout() }
 
         //amplify login check
-        Amplify.Auth.fetchAuthSession(
-            {
-                Log.i("AmplifyCheckLogin", "Auth session = $it")
-                if (it.isSignedIn){
-                    //TODO if signed in change main page login/signup to just one logout button
-                }
-            },
-            { error -> Log.e("AmplifyCheckLogin", "Failed to fetch auth session", error) }
-        )
+
+            Amplify.Auth.fetchAuthSession(
+                {
+                    Log.i("AmplifyCheckLogin", "Auth session = $it")
+                    runOnUiThread(Runnable {
+                        if (it.isSignedIn){
+                            logoutButton!!.visibility = View.VISIBLE;
+                            signUpPageButton!!.visibility = View.GONE;
+                            loginPageButton!!.visibility = View.GONE;
+                        }else{
+                            logoutButton!!.visibility = View.GONE;
+                            signUpPageButton!!.visibility = View.VISIBLE;
+                            loginPageButton!!.visibility = View.VISIBLE;
+                        }
+                    })
+                },
+                { error -> Log.e("AmplifyCheckLogin", "Failed to fetch auth session", error) }
+            )
+
+
     }
 
     private fun openCameraPage() {
@@ -72,6 +84,23 @@ class MainActivity : AppCompatActivity() {
                 Log.i("AuthQuickstart", "Signed out successfully")
                 Handler(Looper.getMainLooper()).post {
                     Toast.makeText(getApplicationContext(), "Signed out", Toast.LENGTH_SHORT).show()
+                    Amplify.Auth.fetchAuthSession(
+                        {
+                            Log.i("AmplifyCheckLogin", "Auth session = $it")
+                            runOnUiThread(Runnable {
+                                if (it.isSignedIn){
+                                    logoutButton!!.visibility = View.VISIBLE;
+                                    signUpPageButton!!.visibility = View.GONE;
+                                    loginPageButton!!.visibility = View.GONE;
+                                }else{
+                                    logoutButton!!.visibility = View.GONE;
+                                    signUpPageButton!!.visibility = View.VISIBLE;
+                                    loginPageButton!!.visibility = View.VISIBLE;
+                                }
+                            })
+                        },
+                        { error -> Log.e("AmplifyCheckLogin", "Failed to fetch auth session", error) }
+                    )
                 }
             },
             { Log.e("AuthQuickstart", "Sign out failed", it) }
