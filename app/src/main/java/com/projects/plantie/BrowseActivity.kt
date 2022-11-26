@@ -66,12 +66,9 @@ class BrowseActivity : AppCompatActivity() {
                     }
 
                     //checking complete, pass info to page
-                    /*val cardList = arrayListOf<CardModel>(CardModel(R.drawable.lilyvalley, "LilyValley", "03 Jan 2022, 03:45"),
-                        CardModel(R.drawable.bluebell, "Bluebell", "03 Jan 2022, 03:45"),
-                        CardModel(R.drawable.cowslip, "Cowslip", "03 Jan 2022, 03:45"))*/
                     val cardList = arrayListOf<CardModel>()
                     for (i in filenameIds.indices) {
-                        cardList.add(CardModel(R.drawable.bluebell, filenameValues[i].toString(), filenameIds[i].toString(), filenameIds[i]))
+                        cardList.add(CardModel(R.drawable.lilyvalley, filenameValues[i].toString(), filenameIds[i].toString(), filenameIds[i]))
                     }
 
                     Log.d("browse_final", "Adapter Browse")
