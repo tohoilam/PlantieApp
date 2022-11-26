@@ -73,7 +73,7 @@ class BrowseActivity : AppCompatActivity() {
                     val cardList = arrayListOf<CardModel>()
 
                     for (i in filenameIds.indices) {
-                        val temp = filepath + filenameIds[i]
+                        val temp = filepath + "/" +filenameIds[i]
                         Log.i("CardList", temp)
                         Log.i("CardList", filenameValues[i].toString())
                         cardList.add(CardModel(R.drawable.lilyvalley, filenameValues[i].toString(), filenameIds[i].toString(), temp))
