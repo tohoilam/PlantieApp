@@ -65,11 +65,9 @@ import java.util.concurrent.Executors
 
 
 // Constants
-private var flower_label: String = ""    // TODO global variable flower label
-//TODO current_flower_label
+private var flower_label: String = ""
 private const val MAX_RESULT_DISPLAY = 3 // Maximum number of results displayed
 private var takePhotoButton: ImageButton? = null
-private var getLocationButton: Button? = null
 
 // Listener for the result of the ImageAnalyzer
 typealias RecognitionListener = (recognition: List<Recognition>) -> Unit
@@ -141,12 +139,6 @@ class CameraActivity : AppCompatActivity() {
         // take photo button
         takePhotoButton = findViewById<ImageButton>(R.id.image_capture_button)
         takePhotoButton!!.setOnClickListener{ takePhoto() }
-
-        // get Location Button for testing
-        // TODO delete the button after testing
-        getLocationButton = findViewById<Button>(R.id.get_location_button)
-        getLocationButton!!.setOnClickListener{ getLastKnownLocation() }
-//        viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
 
     }
 
@@ -262,7 +254,6 @@ class CameraActivity : AppCompatActivity() {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-//                println("change path?")
                 put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Plantie-Image")
             }
         }
@@ -315,7 +306,6 @@ class CameraActivity : AppCompatActivity() {
                     Log.e("gpsLat",gps[0].toString())
                     Log.e("gpsLong",gps[1].toString())
 
-
                 }
                 else {
                     println("no location find")
@@ -339,9 +329,6 @@ class CameraActivity : AppCompatActivity() {
         return result
     }
 
-
-
-//    TODO recognise the photo and pass the parameters to upload
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun uploadToDatabase(photo_path: Uri?){
         println("Uploading to DB")
@@ -349,35 +336,10 @@ class CameraActivity : AppCompatActivity() {
         val gps = getLastKnownLocation()
         val lat = gps[0]
         val long = gps[1]
-        val label = flower_label  // TODO global variable flower label
-
-        //val model = FlowerModel.newInstance(applicationContext)
-        // Creates inputs for reference.
-        //val image = TensorImage.fromBitmap(bitmap)
-        // Runs model inference and gets result.
-        //val outputs = model.process(image)
-        //val probability = outputs.probabilityAsCategoryList
-        // Releases model resources if no longer used.
-        //model.close()
-
+        val label = flower_label
 
         val realpath = photo_path?.let { getRealPathFromURI(it) }
 
-
-        //TODO re-ana
-        //var pic = File(realpath)
-        //val picana= ImageAnalyzer(applicationContext, )
-
-
-        //exif
-        //val inputStream = photo_path?.let { contentResolver.openInputStream(it) }
-            //val pic = File(photo_path?.path)
-            //val exif = ExifInterface(path2.toString())
-        //val exif = inputStream?.let { ExifInterface(it) }
-        //val timme = exif?.getAttribute("TAG_DATETIME")
-        //val lat: Double = exif.getAttributeDouble("TAG_GPS_DEST_LATITUDE",-1)
-        //val lat= exif?.getAttribute("TAG_GPS_DEST_LATITUDE")
-        //val long=exif.getAttribute("TAG_GPS_DEST_LONGITUDE")
 
 //        upload(label, time, long, lat, realpath)
     }
@@ -419,8 +381,6 @@ class CameraActivity : AppCompatActivity() {
                 }.take(MAX_RESULT_DISPLAY) // take the top results
 
             flower_label = outputs[0].label
-
-            //TODO current
 
             // Converting the top probability items into a list of recognitions
             for (output in outputs) {
