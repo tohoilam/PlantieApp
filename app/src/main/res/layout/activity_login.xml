@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.projects.plantie.LoginActivity"
-    android:background="#CDB275"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,100 +15,121 @@
             android:id="@+id/text_welcome_message"
             android:layout_width="319dp"
             android:layout_height="121dp"
+            android:fontFamily="@font/aldrich"
             android:text="Welcome to                  Plantie"
+            android:textColor="#2A5877"
             android:textSize="48sp"
+            app:layout_constraintBottom_toTopOf="@+id/text_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/text_login"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintVertical_bias=".4" />
+            app:layout_constraintVertical_bias=".4"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/text_login"
             android:layout_width="186dp"
             android:layout_height="45dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/aldrich"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="7"
+            android:shadowDy="7"
+            android:shadowRadius="2"
             android:text="Login"
             android:textAlignment="center"
-            android:textSize="34sp"
+            android:textColor="#000000"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toTopOf="@+id/input_login_username"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_welcome_message"
-            app:layout_constraintBottom_toTopOf="@+id/input_login_username"
-            android:layout_marginTop="40dp"/>
+            app:layout_constraintTop_toBottomOf="@id/text_welcome_message" />
 
         <EditText
             android:id="@+id/input_login_username"
             android:layout_width="288dp"
             android:layout_height="62dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Username"
+            android:layout_marginTop="20dp"
             android:background="#30ffffff"
+            android:ems="10"
+            android:fontFamily="@font/aldrich"
+            android:hint=" Username"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/input_login_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_login"
-            app:layout_constraintBottom_toTopOf="@+id/input_login_password"
-            android:layout_marginTop="20dp"/>
+            app:layout_constraintTop_toBottomOf="@id/text_login" />
 
         <EditText
             android:id="@+id/input_login_password"
             android:layout_width="289dp"
             android:layout_height="61dp"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:hint="Password"
+            android:layout_marginTop="5dp"
             android:background="#30ffffff"
+            android:ems="10"
+            android:fontFamily="@font/aldrich"
+            android:hint=" Password"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toTopOf="@+id/button_login_submit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_login_username"
-            app:layout_constraintBottom_toTopOf="@+id/button_login_submit"
-            android:layout_marginTop="5dp"/>
+            app:layout_constraintTop_toBottomOf="@id/input_login_username" />
 
-        <Button
-            android:id="@+id/button_login_submit"
+        <androidx.appcompat.widget.AppCompatButton
+
+        android:id="@+id/button_login_submit"
             android:layout_width="183dp"
             android:layout_height="53dp"
             android:layout_marginTop="40dp"
+            android:fontFamily="@font/aldrich"
             android:text="Login"
+            android:textColor="@color/white"
+            android:background="@drawable/customisedbtn"
+            app:layout_constraintBottom_toTopOf="@+id/text_no_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_login_password"
-            app:layout_constraintBottom_toTopOf="@+id/text_no_account" />
+            app:layout_constraintTop_toBottomOf="@id/input_login_password" />
 
         <TextView
             android:id="@+id/text_no_account"
             android:layout_width="206dp"
             android:layout_height="26dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/aldrich"
             android:text="Haven't had an account?"
             android:textAlignment="center"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_login_submit"
             app:layout_constraintBottom_toTopOf="@+id/button_login_to_sign_up_page"
-            android:layout_marginTop="30dp"/>
-
-        <Button
-            android:id="@+id/button_login_to_sign_up_page"
-            android:layout_width="141dp"
-            android:layout_height="42dp"
-            android:text="Sign up now"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_no_account"
-            app:layout_constraintBottom_toTopOf="@id/button_login_to_main_page" />
+            app:layout_constraintTop_toBottomOf="@id/button_login_submit" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_login_to_sign_up_page"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aldrich"
+            android:text="Signup now"
+            android:textColor="#90216999"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toTopOf="@id/button_login_to_main_page"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_no_account" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_login_to_main_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/aldrich"
             android:text="Home"
+            android:textColor="@color/white"
+            android:background="@drawable/customisedbtn"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_login_to_sign_up_page"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="20dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/button_login_to_sign_up_page" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
