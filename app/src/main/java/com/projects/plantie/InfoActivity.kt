@@ -216,10 +216,12 @@ class InfoActivity : AppCompatActivity() {
                 maxHeight = document.select(".plant-attributes__panel:nth-child(1) .plant-attributes__content div:has(> h6)")[0]!!.ownText()
                 maxSpread = document.select(".plant-attributes__panel:nth-child(1) .plant-attributes__content div:has(> h6)")[2]!!.ownText()
                 timeToMaxHeight = document.select(".plant-attributes__panel:nth-child(1) .plant-attributes__content div:has(> h6)")[1]!!.ownText()
-                conditionA = document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div.flag__body")[0]!!.text()
-                conditionB = document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div.flag__body")[1]!!.text()
-                conditionC = document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div.flag__body")[2]!!.text()
-                conditionD = document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div.flag__body")[3]!!.text()
+
+                val conditionList = document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div.flag__body")
+                conditionA = if (conditionList.size >= 1) conditionList[0]!!.text() else ""
+                conditionB = if (conditionList.size >= 2) conditionList[1]!!.text() else ""
+                conditionC = if (conditionList.size >= 3) conditionList[2]!!.text() else ""
+                conditionD = if (conditionList.size >= 4) conditionList[3]!!.text() else ""
                 moisture = document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div:has(> h6)")[0]!!.text().replace("Moisture", "")
                 ph = document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div:has(> h6)")[1]!!.text().replace("pH", "")
             }

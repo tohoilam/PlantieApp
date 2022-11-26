@@ -13,18 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import org.tensorflow.lite.examples.plantie.R
 
 class BrowseActivity : AppCompatActivity() {
-    private var testAddCardButton: Button? = null
     private var gridLayout: GridLayout? = null
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_browse)
-//        gridLayout = findViewById(R.id.browse_box)
-
-        testAddCardButton = findViewById(R.id.test_add_card)
-
-//        testAddCardButton!!.setOnClickListener{ addCard("Daffodil", "03 Jan 2022, 03:45") }
+        gridLayout = findViewById(R.id.browse_box)
 
         val cardList = arrayListOf<CardModel>(CardModel(R.drawable.lilyvalley, "LilyValley", "03 Jan 2022, 03:45"),
                                                 CardModel(R.drawable.bluebell, "Bluebell", "03 Jan 2022, 03:45"),
@@ -56,67 +51,5 @@ class BrowseActivity : AppCompatActivity() {
         intent = Intent(this, InfoActivity::class.java)
         intent.putExtra("flowerName", plantName);
         startActivity(intent)
-    }
-
-    private fun changeImage() {
-        var image: ImageView = findViewById(R.id.flower_image)
-
-//        when (flowerName) {
-//            "Buttercup" -> {
-//                image.setImageResource(R.drawable.buttercup)
-//            }
-//            "Colts'Foot" -> {
-//                image.setImageResource(R.drawable.coltsfoot)
-//            }
-//            "Daffodil" -> {
-//                image.setImageResource(R.drawable.daffodil)
-//            }
-//            "Daisy" -> {
-//                image.setImageResource(R.drawable.daisy)
-//            }
-//            "Dandelion" -> {
-//                image.setImageResource(R.drawable.dandelion)
-//            }
-//            "Fritillary" -> {
-//                image.setImageResource(R.drawable.fritillary)
-//            }
-//            "Iris" -> {
-//                image.setImageResource(R.drawable.iris)
-//            }
-//            "Pansy" -> {
-//                image.setImageResource(R.drawable.pansy)
-//            }
-//            "Sunflower" -> {
-//                image.setImageResource(R.drawable.sunflower)
-//            }
-//            "Windflower" -> {
-//                image.setImageResource(R.drawable.windflower)
-//            }
-//            "Snowdrop" -> {
-//                image.setImageResource(R.drawable.snowdrop)
-//            }
-//            "LilyValley" -> {
-//                image.setImageResource(R.drawable.lilyvalley)
-//            }
-//            "Bluebell" -> {
-//                image.setImageResource(R.drawable.bluebell)
-//            }
-//            "Crocus" -> {
-//                image.setImageResource(R.drawable.crocus)
-//            }
-//            "Tigerlily" -> {
-//                image.setImageResource(R.drawable.tigerlily)
-//            }
-//            "Tulip" -> {
-//                image.setImageResource(R.drawable.tulip)
-//            }
-//            "Cowslip" -> {
-//                image.setImageResource(R.drawable.cowslip)
-//            }
-//            else -> {
-//                //TODO: Toast of error message for invalid flower name
-//
-//            }
-//        }
     }
 }
