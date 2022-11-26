@@ -311,7 +311,9 @@ class CameraActivity : AppCompatActivity() {
                     val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
                     val realpath = getRealPathFromURI(photo_path!!).toString()
                     val filename = realpath.substring(realpath.lastIndexOf("/")+1);
+                    val filepath = realpath.substring(0, realpath.lastIndexOf("/"));
                     myEdit.putString(filename, label)
+                    myEdit.putString("filepath", filepath)
                     myEdit.commit()
 
                     //exif

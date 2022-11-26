@@ -30,9 +30,13 @@ class BrowseActivity : AppCompatActivity() {
                 runOnUiThread(Runnable {
                     //check local
                     val sharedPreferences = getSharedPreferences("Plantie", MODE_PRIVATE)
-                    val filenameIds = sharedPreferences.all.map { it.key }
-                    val filenameValues = sharedPreferences.all.map { it.value }
+                    val filenameIds = sharedPreferences.all.map { it.key }.toMutableList()
+                    val filenameValues = sharedPreferences.all.map { it.value }.toMutableList()
+                    val filepath = sharedPreferences.getString("filepath", "")
+                    filenameIds.remove("filepath")
+                    filenameValues.remove(filepath)
                     Log.i("LocalStorage", filenameIds.toString())
+                    Log.i("LocalStorage", filepath!!)
                     if (it.isSignedIn){
                         val options = StorageListOptions.builder()
                             .accessLevel(StorageAccessLevel.PRIVATE)
@@ -67,8 +71,12 @@ class BrowseActivity : AppCompatActivity() {
 
                     //checking complete, pass info to page
                     val cardList = arrayListOf<CardModel>()
+
                     for (i in filenameIds.indices) {
-                        cardList.add(CardModel(R.drawable.lilyvalley, filenameValues[i].toString(), filenameIds[i].toString(), filenameIds[i]))
+                        val temp = filepath + filenameIds[i]
+                        Log.i("CardList", temp)
+                        Log.i("CardList", filenameValues[i].toString())
+                        cardList.add(CardModel(R.drawable.lilyvalley, filenameValues[i].toString(), filenameIds[i].toString(), temp))
                     }
 
                     Log.d("browse_final", "Adapter Browse")
