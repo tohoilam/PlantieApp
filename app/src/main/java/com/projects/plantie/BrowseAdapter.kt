@@ -1,6 +1,5 @@
 package com.projects.plantie
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +15,6 @@ class BrowseAdapter(private val cardList: List<CardModel>) : RecyclerView.Adapte
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card, parent, false)
 
-//        val holder : ViewHolder = ViewHolder(itemView);
-//
-//        itemView.setOnClickListener { toInfoPage(cardList, holder.adapterPosition, parent.context) }
-
         return ViewHolder(itemView)
     }
 
@@ -29,6 +24,12 @@ class BrowseAdapter(private val cardList: List<CardModel>) : RecyclerView.Adapte
         holder.flowerImage.setImageResource(currentItem.image)
         holder.flowerName.text = currentItem.name
         holder.captureTime.text = currentItem.date
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, InfoActivity::class.java)
+            intent.putExtra("flowerName", currentItem.name)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -40,11 +41,4 @@ class BrowseAdapter(private val cardList: List<CardModel>) : RecyclerView.Adapte
         val flowerName: TextView = itemView.findViewById(R.id.flower_name)
         val captureTime: TextView = itemView.findViewById(R.id.capture_time)
     }
-
-//    private fun toInfoPage(flowerName: String) {
-//        var intent = Intent(this, InfoActivity::class.java)
-//        intent.putExtra("flowerName", flowerName);
-//        context.startActivity(intent)
-//    }
-
 }

@@ -31,16 +31,6 @@
                 card_view:layout_editor_absoluteX="169dp"
                 card_view:layout_editor_absoluteY="48dp" />
 
-            <Button
-                android:id="@+id/test_add_card"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="48dp"
-                android:text="Add"
-                app:layout_constraintEnd_toEndOf="@+id/text_browse"
-                app:layout_constraintTop_toTopOf="@+id/text_browse" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
