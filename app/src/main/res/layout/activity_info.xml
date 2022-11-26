@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CDB275"
+    xmlns:card_view="http://schemas.android.com/tools"
+    tools:context="com.projects.plantie.InfoActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/plant_name_card"
+        android:layout_width="200sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="30sp"
+        app:cardCornerRadius="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/plant_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Plant Name"
+            android:textAlignment="center"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/plant_name_card"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/flower_image_card"
+                card_view:cardBackgroundColor="@android:color/transparent"
+                android:layout_width="320dp"
+                android:layout_height="250sp"
+                android:layout_marginTop="30sp"
+                android:layout_marginBottom="30sp"
+
+                app:cardCornerRadius="20sp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/flower_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/flower1" />
+            </androidx.cardview.widget.CardView>
+
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flower_image_card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/description_card"
+                        card_view:cardBackgroundColor="@android:color/transparent"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30sp"
+                        android:layout_marginBottom="30sp"
+                        android:layout_marginLeft="45sp"
+                        android:layout_marginRight="30sp"
+                        app:cardCornerRadius="20sp"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/scientific_name_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintHorizontal_bias="0"
+                                android:layout_marginTop="16dp"
+                                android:text="Scientific Name:"
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/scientific_name"
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="16dp"
+                                android:text="N/A"
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.354"
+                                app:layout_constraintStart_toEndOf="@+id/scientific_name_label"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/description"
+                                android:layout_width="280sp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:text="No description."
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/scientific_name" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/statistic_card"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30sp"
+                        android:layout_marginRight="45sp"
+                        android:layout_marginBottom="30sp"
+                        app:cardCornerRadius="20sp"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        card_view:cardBackgroundColor="@android:color/transparent">
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/size_label"
+                                android:layout_width="280dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="16dp"
+                                app:cardBackgroundColor="#745952"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:cardCornerRadius="5dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Size"
+                                    android:textColor="#CDB275"
+                                    android:textAlignment="center"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold"/>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:id="@+id/max_height_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Max height:"
+                                android:textAlignment="viewStart"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginStart="30dp"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintHorizontal_bias="0"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/max_height"
+                                app:layout_constraintTop_toBottomOf="@id/size_label" />
+
+                            <TextView
+                                android:id="@+id/max_height"
+                                android:layout_width="160sp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:text="N/A"
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/max_height_label"
+                                app:layout_constraintTop_toBottomOf="@id/size_label" />
+
+                            <TextView
+                                android:id="@+id/max_spread_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="30dp"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintHorizontal_bias="0"
+                                android:layout_marginTop="5dp"
+                                android:text="Max spread:"
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toStartOf="@+id/max_spread"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/max_height" />
+
+                            <TextView
+                                android:id="@+id/max_spread"
+                                android:layout_width="160sp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="N/A"
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.354"
+                                app:layout_constraintStart_toEndOf="@+id/max_height_label"
+                                app:layout_constraintTop_toBottomOf="@id/max_height" />
+
+                            <TextView
+                                android:id="@+id/time_to_max_height_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="30dp"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintHorizontal_bias="0"
+                                android:layout_marginTop="5dp"
+                                android:text="Time to max height:"
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/time_to_max_height"
+                                app:layout_constraintTop_toBottomOf="@id/max_spread" />
+
+                            <TextView
+                                android:id="@+id/time_to_max_height"
+                                android:layout_width="90sp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginTop="5dp"
+                                android:text="N/A"
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.738"
+                                app:layout_constraintStart_toEndOf="@+id/max_height_label"
+                                app:layout_constraintTop_toBottomOf="@id/max_spread" />
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/growing_conditions_label"
+                                android:layout_width="280dp"
+                                android:layout_height="wrap_content"
+                                app:cardBackgroundColor="#745952"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="16dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/time_to_max_height"
+                                app:cardCornerRadius="5dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Growing Conditions"
+                                    android:textColor="#CDB275"
+                                    android:textAlignment="center"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold"/>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:id="@+id/condition_A"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Chalk"
+                                android:textAlignment="center"
+                                android:textSize="16sp"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/condition_B"
+                                app:layout_constraintTop_toBottomOf="@id/growing_conditions_label" />
+
+                            <TextView
+                                android:id="@+id/condition_B"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="Clay"
+                                android:layout_marginStart="10dp"
+                                android:textAlignment="center"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toEndOf="@id/condition_A"
+                                app:layout_constraintEnd_toStartOf="@id/condition_C"
+                                app:layout_constraintTop_toBottomOf="@id/growing_conditions_label" />
+
+                            <TextView
+                                android:id="@+id/condition_C"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Loam"
+                                android:textAlignment="center"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toEndOf="@id/condition_B"
+                                app:layout_constraintEnd_toStartOf="@id/condition_D"
+                                app:layout_constraintTop_toBottomOf="@id/growing_conditions_label" />
+
+                            <TextView
+                                android:id="@+id/condition_D"
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Sand"
+                                android:textAlignment="center"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toEndOf="@id/condition_C"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/growing_conditions_label" />
+
+                            <TextView
+                                android:id="@+id/moisture_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="30dp"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintHorizontal_bias="0"
+                                android:layout_marginTop="5dp"
+                                android:text="Moisture:"
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/moisture"
+                                app:layout_constraintTop_toBottomOf="@id/condition_D" />
+
+                            <TextView
+                                android:id="@+id/moisture"
+                                android:layout_width="180sp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginStart="10dp"
+                                android:text="N/A"
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.258"
+                                app:layout_constraintStart_toEndOf="@+id/moisture_label"
+                                app:layout_constraintTop_toBottomOf="@id/condition_D" />
+
+                            <TextView
+                                android:id="@+id/ph_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="30dp"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintHorizontal_bias="0"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="40dp"
+                                android:text="pH:"
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/ph"
+                                app:layout_constraintTop_toBottomOf="@id/moisture" />
+
+                            <TextView
+                                android:id="@+id/ph"
+                                android:layout_width="180sp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginBottom="40dp"
+                                android:text="N/A"
+                                android:textAlignment="viewStart"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.706"
+                                app:layout_constraintStart_toEndOf="@+id/ph_label"
+                                app:layout_constraintTop_toBottomOf="@id/moisture" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

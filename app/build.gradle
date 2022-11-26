@@ -74,6 +74,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'org.tensorflow:tensorflow-lite-support:0.1.0-rc1'
     implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
+    implementation "androidx.cardview:cardview:1.0.0"
 
 
     // Amplify
@@ -92,6 +93,10 @@ dependencies {
     // CameraX View class
     implementation "androidx.camera:camera-view:$camerax_version"
     implementation 'androidx.activity:activity-ktx:1.6.1'
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    // Web Scraper
+    implementation 'org.jsoup:jsoup:1.15.3'
 
     // TODO 5: Optional GPU Delegates
     implementation 'org.tensorflow:tensorflow-lite-gpu:2.3.0'
