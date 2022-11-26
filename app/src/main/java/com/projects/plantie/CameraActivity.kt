@@ -305,9 +305,18 @@ class CameraActivity : AppCompatActivity() {
                     println("saving photo")
                     val photo_path = output.savedUri
                     uploadToDatabase(photo_path, name)
+                    val label = flower_label
+                    //save info to local
+                    val sharedPreferences: SharedPreferences = getSharedPreferences("Plantie", MODE_PRIVATE)
+                    val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
+                    val realpath = getRealPathFromURI(photo_path!!).toString()
+                    val filename = realpath.substring(realpath.lastIndexOf("/")+1);
+                    myEdit.putString(filename, label)
+                    myEdit.commit()
+
                     //exif
-                    val inputStream = contentResolver.openInputStream(photo_path!!)
-                    /*if (inputStream != null) {
+                    /*val inputStream = contentResolver.openInputStream(photo_path!!)
+                    if (inputStream != null) {
                         val tempFile = File.createTempFile("tmp", ".jpg", requireContext().cacheDir)
                             .apply { createNewFile() }
                         val fos = FileOutputStream(tempFile)
@@ -324,12 +333,7 @@ class CameraActivity : AppCompatActivity() {
                         Log.d("EXIF", exif.toString())
                         Log.d("EXIF", timme.toString() + lat.toString() + long.toString())
                     }*/
-                    /*//save info to local
-                    val sharedPreferences: SharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
-                    val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
-                    myEdit.putString("name", name.getText().toString())
-                    myEdit.putInt("age", age.getText().toString().toInt())
-                    myEdit.commit()*/
+
                 }
             }
         )
@@ -385,7 +389,6 @@ class CameraActivity : AppCompatActivity() {
         val gps = getLastKnownLocation()
         val lat = gps[0]
         val long = gps[1]
-        val label = flower_label  // TODO global variable flower label
 
         //val model = FlowerModel.newInstance(applicationContext)
         // Creates inputs for reference.
@@ -408,33 +411,34 @@ class CameraActivity : AppCompatActivity() {
                 Log.i("AmplifyCheckLogin", "Auth session = $it")
                 runOnUiThread(Runnable {
                     if (it.isSignedIn){
-                        if (realpath != null) {
-                            if (time != null) {
-                                Amplify.Storage.uploadFile(time, File(realpath), options,
-                                    {
-                                        Log.i("AmplifyS3", "Successfully uploaded: ${it.key}")
-                                        var msg = "Image uploaded"
-                                        Handler(Looper.getMainLooper()).post {
-                                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
-                                        }
-                                    },
-                                    {
-                                        Log.e("AmplifyS3", "Upload failed", it)
-                                        Log.i("S3Exception", it.message.toString())
-                                        Log.i("S3Exception", it.cause.toString())
-                                        var msg = ""
-                                        msg = when (it.message){
-                                            "Something went wrong with your AWS S3 Storage upload file operation" -> "Sync with cloud failed. Please login if you still haven't"
-                                            else -> "Fatal error"
-                                        }
-                                        Handler(Looper.getMainLooper()).post {
-                                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
-                                        }
+                        if (realpath != null && time != null) {
+                            Amplify.Storage.uploadFile(time, File(realpath), options,
+                                {
+                                    Log.i("AmplifyS3", "Successfully uploaded: ${it.key}")
+                                    var msg = "Image uploaded"
+                                    Handler(Looper.getMainLooper()).post {
+                                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
                                     }
-                                )
-                            }
+                                },
+                                {
+                                    Log.e("AmplifyS3", "Upload failed", it)
+                                    Log.i("S3Exception", it.message.toString())
+                                    Log.i("S3Exception", it.cause.toString())
+                                    var msg = ""
+                                    msg = when (it.message){
+                                        "Something went wrong with your AWS S3 Storage upload file operation" -> "Sync with cloud failed. Please login if you still haven't"
+                                        else -> "Fatal error"
+                                    }
+                                    Handler(Looper.getMainLooper()).post {
+                                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            )
                         }
-                    }else{
+                    }else{ //nnot logined/ cloud not available, warn users
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(getApplicationContext(), "Photo not sync to cloud, make sure you logged in or have stable internet connection", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 })
             },

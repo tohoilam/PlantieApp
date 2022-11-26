@@ -28,38 +28,61 @@ class BrowseActivity : AppCompatActivity() {
             {
                 Log.i("AmplifyCheckLogin", "Auth session = $it")
                 runOnUiThread(Runnable {
+                    //check local
+                    val sharedPreferences = getSharedPreferences("Plantie", MODE_PRIVATE)
+                    val filenameIds = sharedPreferences.all.map { it.key }
+                    val filenameValues = sharedPreferences.all.map { it.value }
+                    Log.i("LocalStorage", filenameIds.toString())
                     if (it.isSignedIn){
                         val options = StorageListOptions.builder()
                             .accessLevel(StorageAccessLevel.PRIVATE)
-                            .targetIdentityId("otherUserID")
                             .build()
+                        val cloudfilenameIds = mutableListOf<String>()
 
                         Amplify.Storage.list("", options,
                             { result ->
                                 result.items.forEach { item ->
                                     Log.i("AmplifyS3", "Item: ${item.key}")
+                                    cloudfilenameIds.add(item.key)
                                 }
                             },
                             { Log.e("AmplifyS3", "List failure", it) }
                         )
-                    }else{ //cloud not available, check local instead
+                        //compare local and cloud
+                        var cloudExtra = cloudfilenameIds.minus(filenameIds)
+                        Log.i("CloudSync", cloudExtra.toString())
+                        var localExtra = filenameIds.minus(cloudfilenameIds)
+                        Log.i("CloudSync", localExtra.toString())
+                        //TODO: syncing between local and cloud
+                        if (cloudExtra.isEmpty() && localExtra.isEmpty()){//completely sync
+
+                        } else if (cloudExtra.isEmpty()){//local has more photos
+
+                        } else if (localExtra.isEmpty()) {//cloud has more photos
+
+                        }
+                    }else{ //cloud not available, use local only
 
                     }
+
+                    //checking complete, pass info to page
+                    /*val cardList = arrayListOf<CardModel>(CardModel(R.drawable.lilyvalley, "LilyValley", "03 Jan 2022, 03:45"),
+                        CardModel(R.drawable.bluebell, "Bluebell", "03 Jan 2022, 03:45"),
+                        CardModel(R.drawable.cowslip, "Cowslip", "03 Jan 2022, 03:45"))*/
+                    val cardList = arrayListOf<CardModel>()
+                    for (i in filenameIds.indices) {
+                        cardList.add(CardModel(R.drawable.bluebell, filenameValues[i].toString(), filenameIds[i].toString(), filenameIds[i]))
+                    }
+
+                    Log.d("browse_final", "Adapter Browse")
+
+                    recyclerView = findViewById(R.id.recycler_view)
+                    recyclerView.layoutManager = GridLayoutManager(this, 2)
+                    recyclerView.adapter = BrowseAdapter(cardList)
                 })
             },
             { error -> Log.e("AmplifyCheckLogin", "Failed to fetch auth session", error) }
         )
-
-        val cardList = arrayListOf<CardModel>(CardModel(R.drawable.lilyvalley, "LilyValley", "03 Jan 2022, 03:45"),
-                                                CardModel(R.drawable.bluebell, "Bluebell", "03 Jan 2022, 03:45"),
-                                                CardModel(R.drawable.cowslip, "Cowslip", "03 Jan 2022, 03:45"))
-
-        Log.d("browse_final", "Adapter Browse")
-
-        recyclerView = findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
-        recyclerView.adapter = BrowseAdapter(cardList)
-
     }
 
     private fun addCard(plantName: String, dateTime: String) {
