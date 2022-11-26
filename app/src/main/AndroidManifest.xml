@@ -9,9 +9,10 @@
     -->
     <uses-feature android:name="android.hardware.camera.any" /> <!-- Specifying that the app will need camera permission -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".AmplifyInit"
+        android:name="com.projects.plantie.AmplifyInit"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,42 +21,42 @@
         android:theme="@style/Theme.Plantie"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".InfoActivity"
+            android:name="com.projects.plantie.InfoActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".BrowseActivity"
+            android:name="com.projects.plantie.BrowseActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CameraActivity"
+            android:name="com.projects.plantie.CameraActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.projects.plantie.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name="com.projects.plantie.SignUpActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.projects.plantie.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
