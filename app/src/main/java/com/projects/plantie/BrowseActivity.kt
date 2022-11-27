@@ -142,7 +142,7 @@ class BrowseActivity : AppCompatActivity() {
                 val options = StorageDownloadFileOptions.builder()
                     .accessLevel(StorageAccessLevel.PRIVATE)
                     .build()
-                /*cloudExtra.forEach { item ->
+                cloudExtra.forEach { item ->
                     Log.i("CloudSync: cloud", "Cacheing ${item} to ${applicationContext.filesDir}, ${filepath}")
                     val file = File("${applicationContext.filesDir}/${item}.jpg")
                     Amplify.Storage.downloadFile(item, file, options,
@@ -150,12 +150,19 @@ class BrowseActivity : AppCompatActivity() {
                             Log.i("CloudSync: cloud", "Successfully downloaded: ${it.file.name}")
                             var path = File(filepath+"/${item}.jpg/")
                             Log.i("CloudSync: cloud", "Saving to: ${path}")
-                            var copyToLocal = file.copyTo(path!!,true)
-                            Log.i("CloudSync: cloud", "Saved to: ${copyToLocal}, ${filepath}/${item}.jpg")
+                            try{
+                                if (path.exists()){
+                                    path.delete()
+                                }
+                                var copyToLocal = file.copyTo(path!!,true)
+                                Log.i("CloudSync: cloud", "Saved to: ${copyToLocal}, ${filepath}/${item}.jpg")
+                            }catch (e: Exception){
+                                Log.e("CloudSync: cloud", "Copy cache to gallery failed", e)
+                            }
                         },
                         { Log.e("CloudSync: cloud", "Download Failure", it) }
                     )
-                }*/
+                }
                 if (!localExtra.isEmpty()) {//local has more photos
                     //save local to cloud
                     Log.i("CloudSync: local", "local has more photos, sync attempt")
