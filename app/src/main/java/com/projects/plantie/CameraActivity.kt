@@ -31,10 +31,7 @@ import android.graphics.Matrix
 import android.location.LocationManager
 import android.media.ExifInterface
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
@@ -406,23 +403,30 @@ class CameraActivity : AppCompatActivity() {
                                     }
                                     //fetch newest sharedpreference
                                     val session = authSession as AWSCognitoAuthSession
-                                    Log.i("AmplifyCognito", "Cognito id: ${session.identityId}")
+                                    var id = session.identityId.value.toString()
+                                    Log.i("AmplifyCognito", "Cognito id: ${id}")
+
+
+                                    val sharedPreferences = getSharedPreferences("Plantie", MODE_PRIVATE)
+                                    val filenameIds = sharedPreferences.all.map { it.key }.toMutableList()
+                                    val filenameValues = sharedPreferences.all.map { it.value }.toMutableList()
                                     val request = RestOptions.builder()
                                         .addPath("/items")
-                                        .addQueryParameters(mapOf("id" to session.identityId.toString()))
+                                        .addQueryParameters(mapOf("id" to id))
                                         .build()
-
                                     Amplify.API.get(request,
-                                        {
-                                            Log.i("AmplifyAPI", "GET succeeded: $it")
+                                        {getResponse ->
+                                            Log.i("AmplifyAPI", "GET succeeded: ${getResponse.data.asString()}")
                                             //then upload updated sharedpreference
                                             val options = RestOptions.builder()
                                                 .addPath("/todo")
-                                                .addBody("{\"name\": \"Mow the lawn\"}".toByteArray())
+                                                .addBody("{\"id\": \"${}\"}".toByteArray())
                                                 .build()
                                             Amplify.API.post(options,
-                                                { Log.i("MyAmplifyApp", "POST succeeded: ${it.toString()}") },
-                                                { Log.e("MyAmplifyApp", "POST failed: ${it.toString()}") }
+                                                {postResponse ->
+                                                    Log.i("AmplifyAPI", "POST succeeded: ${postResponse.data.asString()}")
+                                                },
+                                                { Log.e("AmplifyAPI", "POST failed: ${it}") }
                                             )
                                         },
                                         { Log.e("AmplifyAPI", "GET failed", it) }

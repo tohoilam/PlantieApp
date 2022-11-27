@@ -13,11 +13,11 @@ const awsServerlessExpressMiddleware = require('aws-serverless-express/middlewar
 const bodyParser = require('body-parser')
 const express = require('express')
 
-AWS.config.update({ region: process.env.TABLE_REGION });
+AWS.config.update({ region: "ap-southeast-1" });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-let tableName = "Plantie";
+let tableName = "Plantie-dev";
 
 const path = "/items";
 
