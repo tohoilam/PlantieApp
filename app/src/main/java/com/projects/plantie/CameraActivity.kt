@@ -24,6 +24,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -76,8 +77,9 @@ import java.util.concurrent.Executors
 
 // Constants
 private var flower_label: String = ""
-private const val MAX_RESULT_DISPLAY = 2 // Maximum number of results displayed
+private const val MAX_RESULT_DISPLAY = 1 // Maximum number of results displayed
 private var takePhotoButton: ImageButton? = null
+private var showInfoButton: Button? = null
 
 // Listener for the result of the ImageAnalyzer
 typealias RecognitionListener = (recognition: List<Recognition>) -> Unit
@@ -87,18 +89,13 @@ typealias RecognitionListener = (recognition: List<Recognition>) -> Unit
  */
 class CameraActivity : AppCompatActivity() {
 
-//    private lateinit var viewBinding: ActivityMainBinding
-
     // CameraX variables
     private lateinit var preview: Preview // Preview use case, fast, responsive view of the camera
-//    private lateinit var imageAnalyzer: ImageAnalysis // Analysis use case, for running ML code
     private var imageCapture: ImageCapture? = null
     private lateinit var camera: Camera
     private val cameraExecutor = Executors.newSingleThreadExecutor()
 
 //    Location Manager
-    private lateinit var locationManager: LocationManager
-    private val locationPermissionCode = 2
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     // Views attachment
@@ -149,6 +146,10 @@ class CameraActivity : AppCompatActivity() {
         // take photo button
         takePhotoButton = findViewById<ImageButton>(R.id.image_capture_button)
         takePhotoButton!!.setOnClickListener{ takePhoto() }
+
+        // show info button
+        showInfoButton = findViewById(R.id.showInfo)
+        showInfoButton!!.setOnClickListener{ showInfo() }
 
     }
 
@@ -453,9 +454,14 @@ class CameraActivity : AppCompatActivity() {
             { error -> Log.e("AmplifyCheckLogin", "Failed to fetch auth session", error) }
         )
 
-
 //        upload(label, time, long, lat, realpath)
 
+    }
+
+    private fun showInfo(){
+        intent = Intent(this, InfoActivity::class.java)
+        intent.putExtra("flowerName", flower_label);
+        startActivity(intent)
     }
 
 
@@ -569,6 +575,8 @@ class CameraActivity : AppCompatActivity() {
                 }
             }.toTypedArray()
     }
+
+    fun showInfo(view: View) {}
 
 }
 

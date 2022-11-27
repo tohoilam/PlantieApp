@@ -47,15 +47,158 @@
       "ph": "Acid, Alkaline, Neutral"
     },
     {
-      "name": "empty",
-      "scientific_name": "",
-      "description": "",
-      "max_height": "",
+      "name": "buttercup",
+      "scientific_name": "Hemerocallis Buttercup Parade",
+      "description": "A deciduous herbaceous perennial that reaches approximately 51cm in height when in flower. It forms a clump of arching, strap-like green leaves and bright lemon-yellow flowers to 9cm across with a green throat in summer.",
+      "max_height": "0.5–1 metres",
+      "max_spread": "0–0.1 metre",
+      "time_to_max_height": "2–5 years",
+      "conditions": ["Chalk", "Clay", "Loam", "Sand"],
+      "moisture": "Moist but well–drained",
+      "ph": "Acid, Alkaline, Neutral"
+    },
+    {
+      "name": "colts_foot",
+      "scientific_name": "Tussilago farfara",
+      "description": "Traditionally an ingredient in cough medicine, coltsfoot flowers before its leaves emerge in early spring. Flowers are yellow and similar to dandelions, borne singularly on short scaly stems. Leaves are entire and toothed with a grey tinge. It spreads by means of fleshy but brittle rhizomes, making it a perennial nuisance in the garden border. Flowers provide an early source of nectar for honey bees. Coltsfoot is also a larval food source for moths.",
+      "max_height": "0.1–0.5 metres",
       "max_spread": "",
       "time_to_max_height": "",
-      "conditions": [],
-      "moisture": "",
+      "conditions": ["Clay", "Loam"],
+      "moisture": "Moist but well–drained",
       "ph": ""
+    },
+    {
+      "name": "daisy",
+      "scientific_name": "Bellis perennis",
+      "description": "An evergreen perennial forming rosettes of dark green, spoon-shaped leaves, with small, solitary, yellow-centred, pink-tinged, white daisies in late spring and summer.",
+      "max_height": "Up to 10cm",
+      "max_spread": "0–0.1 metre",
+      "time_to_max_height": "2–5 years",
+      "conditions": ["Chalk", "Clay", "Loam", "Sand"],
+      "moisture": "Moist but well–drained, Well–drained",
+      "ph": "Acid, Alkaline, Neutral"
+    },
+    {
+      "name": "dandelion",
+      "scientific_name": "Taraxacum officinale",
+      "description": "An evergreen herbaceous perennial known as the 'dandelion' with upright purple stems and upright or horizontal dark green basal foliage growing from a main taproot. Yellow flower heads change into silvery, wispy tufted seed heads or 'dandelion clocks' which disperse in the wind. Often considered a weed but the leaves, flowers and roots are sometimes used in herbal medicine or as food and the flowers attract pollinators.",
+      "max_height": "0.1–0.5 metres",
+      "max_spread": "0.1–0.5 metres",
+      "time_to_max_height": "1 year",
+      "conditions": ["Chalk", "Clay", "Loam", "Sand"],
+      "moisture": "Moist but well–drained, Well–drained",
+      "ph": "Acid, Alkaline, Neutral"
+    },
+    {
+      "name": "fritillary",
+      "scientific_name": "Fritillaria meleagris",
+      "description": "A bulbous perennial to 30cm in height, with lance-shaped, greyish-green leaves and 1-2 nodding, bell-shaped purple flowers, the tepals tessellated with pale pink in a checkerboard fashion. Widely naturalised in Britain, but probably not a true native.",
+      "max_height": "0.1–0.5 metres",
+      "max_spread": "0–0.1 metre",
+      "time_to_max_height": "2–5 years",
+      "conditions": ["Chalk", "Clay", "Loam", "Sand"],
+      "moisture": "Moist but well–drained, Well–drained",
+      "ph": "Acid, Alkaline, Neutral"
+    },
+    {
+      "name": "iris",
+      "scientific_name": "Iris pseudacorus 'Alba'",
+      "description": "A clump-forming, spreading perennial with erect, sword-shaped, greyish-green leaves to 90cm long and, in early summer, up to twelve, translucent cream flowers with purple-veined falls are borne on stems to 1m tall.",
+      "max_height": "0.5–1 metres",
+      "max_spread": "0.5–1 metres",
+      "time_to_max_height": "2–5 years",
+      "conditions": ["Clay", "Loam"],
+      "moisture": "Poorly–drained",
+      "ph": "Acid"
+    },
+    {
+      "name": "pansy",
+      "scientific_name": "Viola cornuta",
+      "description": "A spreading evergreen perennial to 20cm in height, with lance-shaped leaves and long-spurred, light violet flowers 3cm across.",
+      "max_height": "0.1–0.5 metres",
+      "max_spread": "0.1–0.5 metres",
+      "time_to_max_height": "2–5 years",
+      "conditions": ["Chalk", "Clay", "Loam", "Sand"],
+      "moisture": "Moist but well–drained",
+      "ph": "Acid, Alkaline, Neutral"
+    },
+    {
+      "name": "windflower",
+      "scientific_name": "Anemone vernalis",
+      "description": "P. vernalis is a semi-evergreen perennial forming a clump to 10cm in height, with finely divided leaves and bell-shaped white flowers 6cm in width, nodding in bud, later upward-facing, followed by silky seed-heads.",
+      "max_height": "Up to 10cm",
+      "max_spread": "0–0.1 metre",
+      "time_to_max_height": "2–5 years",
+      "conditions": ["Chalk", "Loam", "Sand"],
+      "moisture": "Moist but well–drained",
+      "ph": "Acid, Neutral"
+    },
+    {
+      "name": "snowdrop",
+      "scientific_name": "Galanthus nivalis",
+      "description": "A perennial to 15cm, with narrow, grey-green leaves and solitary, nodding, fragrant white flowers 2.5cm in length, the inner segments marked with green at the tip.",
+      "max_height": "0.1–0.5 metres",
+      "max_spread": "0–0.1 metre",
+      "time_to_max_height": "2–5 years",
+      "conditions": ["Chalk", "Clay", "Loam", "Sand"],
+      "moisture": "Moist but well–drained, Well–drained",
+      "ph": "Acid, Alkaline, Neutral"
+    },
+    {
+      "name": "bluebell",
+      "scientific_name": "Hyacinthoides non-scripta",
+      "description": "H. non-scripta is a vigorous perennial with linear leaves and erect stems bearing arching racemes of fragrant, narrowly tubular, violet-blue, or occasionally white, flowers in spring.",
+      "max_height": "0.1–0.5 metres",
+      "max_spread": "0–0.1 metre",
+      "time_to_max_height": "2–5 years",
+      "conditions": ["Chalk", "Clay", "Loam", "Sand"],
+      "moisture": "Moist but well–drained, Well–drained",
+      "ph": "Acid, Alkaline, Neutral"
+    },
+    {
+      "name": "crocus",
+      "scientific_name": "Crocus vernus",
+      "description": "Aspring- to early-summer-flowering corm, good for naturalising in grass. Foliage is narrow and dark green, starting upright then spreading, and the goblet-shaped flowers may be white or shades of purple.",
+      "max_height": "Up to 10cm",
+      "max_spread": "0–0.1 metre",
+      "time_to_max_height": "2–5 years",
+      "conditions": ["Chalk", "Clay", "Loam", "Sand"],
+      "moisture": "Well–drained",
+      "ph": "Acid, Alkaline, Neutral"
+    },
+    {
+      "name": "tigerlily",
+      "scientific_name": "Lilium lancifolium 'Splendens'",
+      "description": "A vigorous bulbous perennial with narrow leaves and 20-25 nodding, black-spotted, orange-red flowers to 12cm across, with recurved petals, from late summer.",
+      "max_height": "1–1.5 metres",
+      "max_spread": "0.1–0.5 metres",
+      "time_to_max_height": "2–5 years",
+      "conditions": ["Chalk", "Clay", "Loam", "Sand"],
+      "moisture": "Moist but well–drained, Well–drained",
+      "ph": "Alkaline, Neutral"
+    },
+    {
+      "name": "tulip",
+      "scientific_name": "Tulipa 'Bulldog'",
+      "description": "A perennial bulb, up to 60cm high in flower, with broadly lance-shaped, grey-green leaves. Flowers are dark violet with heavily fringed edges.",
+      "max_height": "0.5–1 metres",
+      "max_spread": "0.1–0.5 metres",
+      "time_to_max_height": "1–2 years",
+      "conditions": ["Chalk", "Clay", "Loam", "Sand"],
+      "moisture": "Moist but well–drained, Well–drained",
+      "ph": "Acid, Alkaline, Neutral"
+    },
+    {
+      "name": "cowslip",
+      "scientific_name": "Primula veris (Pr)",
+      "description": "P. veris is a semi-evergreen perennial to 25cm, with a rosette of distinctly stalked, oblong-ovate leaves and upright stems bearing umbels of nodding, bell-shaped, fragrant rich yellow flowers 1.5cm in width.",
+      "max_height": "0.1–0.5 metres",
+      "max_spread": "0–0.1 metre",
+      "time_to_max_height": "2–5 years",
+      "conditions": ["Chalk", "Clay", "Loam", "Sand"],
+      "moisture": "Moist but well–drained",
+      "ph": "Acid, Alkaline, Neutral"
     }
   ]
 }
