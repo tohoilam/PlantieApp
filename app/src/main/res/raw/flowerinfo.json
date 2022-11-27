@@ -1,0 +1,61 @@
+{
+  "flower_info": [
+    {
+      "name": "sunflower",
+      "scientific_name": "Helianthus annuus",
+      "description": "H. annuus is a tall, fast-growing annual with broad, oval to heart-shaped, roughly hairy leaves 10-40cm long. In summer it bears huge flowers up to 30cm across with bright yellow petals and dark brownish or purplish centres. The flowers attract bees and the seeds that follow provide food for finches.",
+      "max_height": "2.5–4 metres",
+      "max_spread": "0.5–1 metres",
+      "time_to_max_height": "1 year",
+      "conditions": [
+        "Chalk",
+        "Clay",
+        "Loam",
+        "Sand"
+      ],
+      "moisture": "Moist but well–drained",
+      "ph": "Alkaline, Neutral"
+    },
+    {
+      "name": "daffodil",
+      "scientific_name": "Narcissus assoanus",
+      "description": "A bulbous perennial to a height of up to 15cm with very narrow, but short, deep green leaves. The deep yellow blooms appear in spring, two or three per stem, and are scented.",
+      "max_height": "0.1–0.5 metres",
+      "max_spread": "0.1–0.5 metres",
+      "time_to_max_height": "1–2 years",
+      "conditions": [
+        "Chalk",
+        "Clay",
+        "Loam",
+        "Sand"
+      ],
+      "moisture": "Moist but well–drained, Well–drained",
+      "ph": "Acid, Alkaline, Neutral"
+    },
+    {
+      "name": "lily_valley",
+      "scientific_name": "Convallaria majalis",
+      "description": "A perennial to 25cm in height, forming extensive colonies. Erect racemes of nodding, bell-shaped, fragrant white flowers arise with the paired, elliptic leaves.",
+      "max_height": "0.1–0.5 metres",
+      "max_spread": "2–5 years",
+      "time_to_max_height": "0.1–0.5 metres",
+      "conditions": [
+        "Clay",
+        "Loam"
+      ],
+      "moisture": "Moist but well–drained, Poorly–drained",
+      "ph": "Acid, Alkaline, Neutral"
+    },
+    {
+      "name": "empty",
+      "scientific_name": "",
+      "description": "",
+      "max_height": "",
+      "max_spread": "",
+      "time_to_max_height": "",
+      "conditions": [],
+      "moisture": "",
+      "ph": ""
+    }
+  ]
+}
