@@ -1,30 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (C) 2020 The Android Open Source Project
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~      http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.tensorflow.lite.examples.plantie">
-<!--    package="org.tensorflow.lite.examples.classification"-->
-<!-- Make sure the device has a camera. If you use android.hardware.camera without .any,
-    it will not work if you have a device without a back camera, such as most Chromebooks. -->
-    <uses-feature android:name="android.hardware.camera.any" />
-
-    <!-- Specifying that the app will need camera permission -->
+    <!-- package="org.tensorflow.lite.examples.classification" -->
+    <!--
+ Make sure the device has a camera. If you use android.hardware.camera without .any,
+    it will not work if you have a device without a back camera, such as most Chromebooks.
+    -->
+    <uses-feature android:name="android.hardware.camera.any" /> <!-- Specifying that the app will need camera permission -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Specifying that the app will need to write photos to storage -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
@@ -36,12 +21,28 @@
     <application
         android:name="com.projects.plantie.AmplifyInit"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Plantie"
         tools:ignore="AllowBackup">
+        <activity
+            android:name="com.projects.plantie.InfoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name="com.projects.plantie.BrowseActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Plantie.BackgroundImageStyle">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name="com.projects.plantie.CameraActivity"
             android:exported="false">
@@ -51,27 +52,34 @@
         </activity>
         <activity
             android:name="com.projects.plantie.LoginActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.Plantie.BackgroundImageStyle">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name="com.projects.plantie.SignUpActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.Plantie.BackgroundImageStyle">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name="com.projects.plantie.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Plantie.BackgroundImageStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

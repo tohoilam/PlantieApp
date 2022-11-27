@@ -77,12 +77,14 @@ dependencies {
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'org.tensorflow:tensorflow-lite-support:0.1.0-rc1'
     implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
+    implementation "androidx.cardview:cardview:1.0.0"
 
 
     // Amplify
     implementation 'com.amplifyframework:aws-api:1.37.6'
     implementation 'com.amplifyframework:aws-datastore:1.37.6'
     implementation 'com.amplifyframework:aws-auth-cognito:1.37.6'
+    implementation 'com.amplifyframework:aws-storage-s3:1.37.6'
     implementation 'com.google.android.gms:play-services-location:21.0.0'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
@@ -96,6 +98,10 @@ dependencies {
     // CameraX View class
     implementation "androidx.camera:camera-view:$camerax_version"
     implementation 'androidx.activity:activity-ktx:1.6.1'
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    // Web Scraper
+    implementation 'org.jsoup:jsoup:1.15.3'
 
 //    def camerax_version = "1.1.0-beta01"
     implementation "androidx.camera:camera-core:${camerax_version}"

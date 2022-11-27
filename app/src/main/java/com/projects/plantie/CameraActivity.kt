@@ -24,16 +24,21 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.location.LocationManager
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -44,9 +49,13 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.storage.StorageAccessLevel
+import com.amplifyframework.storage.options.StorageUploadFileOptions
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.projects.plantie.ui.RecognitionAdapter
@@ -59,6 +68,8 @@ import org.tensorflow.lite.gpu.CompatibilityList
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.model.Model
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Executors
@@ -277,14 +288,45 @@ class CameraActivity : AppCompatActivity() {
                     Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
                 }
 
-                override fun
-                        onImageSaved(output: ImageCapture.OutputFileResults){
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onImageSaved(output: ImageCapture.OutputFileResults){
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
                     println("saving photo")
                     val photo_path = output.savedUri
-                    uploadToDatabase(photo_path)
+                    uploadToDatabase(photo_path, name)
+                    val label = flower_label
+                    //save info to local
+                    val sharedPreferences: SharedPreferences = getSharedPreferences("Plantie", MODE_PRIVATE)
+                    val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
+                    val realpath = getRealPathFromURI(photo_path!!).toString()
+                    val filename = realpath.substring(realpath.lastIndexOf("/")+1);
+                    val filepath = realpath.substring(0, realpath.lastIndexOf("/"));
+                    myEdit.putString(filename, label)
+                    myEdit.putString("filepath", filepath)
+                    myEdit.commit()
+
+                    //exif
+                    /*val inputStream = contentResolver.openInputStream(photo_path!!)
+                    if (inputStream != null) {
+                        val tempFile = File.createTempFile("tmp", ".jpg", requireContext().cacheDir)
+                            .apply { createNewFile() }
+                        val fos = FileOutputStream(tempFile)
+                        val buf = ByteArray(8192)
+                        var length: Int
+                        while (inputStream.read(buf).also { length = it } > 0) {
+                            fos.write(buf, 0, length)
+                        }
+                        fos.close()
+                        val exif = ExifInterface(tempFile.absolutePath)
+                        val timme = exif?.getAttribute("TAG_DATETIME")
+                        val lat= exif?.getAttribute("TAG_GPS_DEST_LATITUDE")
+                        val long= exif.getAttribute("TAG_GPS_DEST_LONGITUDE")
+                        Log.d("EXIF", exif.toString())
+                        Log.d("EXIF", timme.toString() + lat.toString() + long.toString())
+                    }*/
+
                 }
             }
         )
@@ -330,18 +372,64 @@ class CameraActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
-    private fun uploadToDatabase(photo_path: Uri?){
+    private fun uploadToDatabase(photo_path: Uri?, time: String?){
         println("Uploading to DB")
-        val time = SimpleDateFormat(FILENAME_FORMAT).format(System.currentTimeMillis())
+        //val time = SimpleDateFormat(FILENAME_FORMAT).format(System.currentTimeMillis())
         val gps = getLastKnownLocation()
         val lat = gps[0]
         val long = gps[1]
+
         val label = flower_label
 
+
         val realpath = photo_path?.let { getRealPathFromURI(it) }
+        Log.i("uploadToDatabase", realpath.toString())
+        val options = StorageUploadFileOptions.builder()
+            .accessLevel(StorageAccessLevel.PRIVATE)
+            .build()
+
+        Amplify.Auth.fetchAuthSession(
+            {
+                Log.i("AmplifyCheckLogin", "Auth session = $it")
+                runOnUiThread(Runnable {
+                    if (it.isSignedIn){
+                        if (realpath != null && time != null) {
+                            Amplify.Storage.uploadFile(time, File(realpath), options,
+                                {
+                                    Log.i("AmplifyS3", "Successfully uploaded: ${it.key}")
+                                    var msg = "Image uploaded"
+                                    Handler(Looper.getMainLooper()).post {
+                                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                                    }
+                                },
+                                {
+                                    Log.e("AmplifyS3", "Upload failed", it)
+                                    Log.i("S3Exception", it.message.toString())
+                                    Log.i("S3Exception", it.cause.toString())
+                                    var msg = ""
+                                    msg = when (it.message){
+                                        "Something went wrong with your AWS S3 Storage upload file operation" -> "Sync with cloud failed. Please login if you still haven't"
+                                        else -> "Fatal error"
+                                    }
+                                    Handler(Looper.getMainLooper()).post {
+                                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            )
+                        }
+                    }else{ //nnot logined/ cloud not available, warn users
+                        Handler(Looper.getMainLooper()).post {
+                            Toast.makeText(getApplicationContext(), "Photo not sync to cloud, make sure you logged in or have stable internet connection", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
+            },
+            { error -> Log.e("AmplifyCheckLogin", "Failed to fetch auth session", error) }
+        )
 
 
 //        upload(label, time, long, lat, realpath)
+
     }
 
 

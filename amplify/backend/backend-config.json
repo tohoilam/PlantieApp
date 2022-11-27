@@ -24,5 +24,12 @@
         ]
       }
     }
+  },
+  "storage": {
+    "planties3": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
   }
 }

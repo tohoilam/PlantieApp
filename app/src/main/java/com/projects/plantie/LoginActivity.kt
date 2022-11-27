@@ -3,6 +3,8 @@ package com.projects.plantie
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -39,19 +41,39 @@ class LoginActivity : AppCompatActivity() {
         //Amplify Signin
         Amplify.Auth.signIn(username, password,
             { result ->
+                Log.i("Amplify", "result:"+result)
                 if (result.isSignInComplete) {
                     Log.i("AuthQuickstart", "Sign in succeeded")
+                    Handler(Looper.getMainLooper()).post {
+                        Toast.makeText(getApplicationContext(), "Logined", Toast.LENGTH_SHORT).show()
+                    }
                     toMainPage()
                 } else {
                     Log.i("AuthQuickstart", "Sign in not complete")
+                    Handler(Looper.getMainLooper()).post {
+                        Toast.makeText(getApplicationContext(), "User not confirmed, please activate your account in email", Toast.LENGTH_SHORT).show()
+                    }
                 }
             },
-            { Log.e("AuthQuickstart", "Failed to sign in", it) }
+            {
+                Log.e("AuthQuickstart", "Failed to sign in", it)
+                Log.i("AuthException", it.message.toString())
+                var msg = ""
+                msg = when (it.message){
+                    "Username already exists in the system." -> "Username exists, please try with another username"
+                    "Failed since user is not authorized." -> "Incorrect password, please try again"
+                    "User not found in the system." -> "User not found, please signin if you are new user"
+                    else -> "Fatal error"
+                }
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                }
+            }
         )
 
         var messageString = StringBuilder()
         messageString.append("Username: ").append(username).append("    Password: ").append(password)
-        Toast.makeText(this@LoginActivity, messageString, Toast.LENGTH_LONG).show()
+        //Toast.makeText(this@LoginActivity, messageString, Toast.LENGTH_LONG).show()
     }
 
     private fun toSignUpPage() {

@@ -44,7 +44,22 @@
                             "EMAIL"
                         ]
                     }
+                },
+                "S3TransferUtility": {
+                    "Default": {
+                        "Bucket": "plantie05638-dev",
+                        "Region": "ap-southeast-1"
+                    }
                 }
+            }
+        }
+    },
+    "storage": {
+        "plugins": {
+            "awsS3StoragePlugin": {
+                "bucket": "plantie05638-dev",
+                "region": "ap-southeast-1",
+                "defaultAccessLevel": "guest"
             }
         }
     }

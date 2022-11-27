@@ -16,4 +16,7 @@
 <!--        <item name="windowNoTitle">true</item>-->
 <!--        <item name="android:windowFullscreen">true</item>-->
     </style>
+    <style name="Theme.Plantie.BackgroundImageStyle">
+        <item name="android:windowBackground">@drawable/bgimg</item>
+    </style>
 </resources>
