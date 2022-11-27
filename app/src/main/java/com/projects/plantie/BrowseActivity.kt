@@ -118,7 +118,9 @@ class BrowseActivity : AppCompatActivity() {
             val sharedPreferences = getSharedPreferences("Plantie", MODE_PRIVATE)
             val filenameIds = sharedPreferences.all.map { it.key }.toMutableList()
             val filenameValues = sharedPreferences.all.map { it.value }.toMutableList()
-            val filepath = sharedPreferences.getString("filepath", "")
+            val filepath = sharedPreferences.getString("filepath",
+                Environment.getExternalStorageDirectory().toString()+"/Pictures/Plantie-Image/"
+            )
             filenameIds.remove("filepath")
             filenameValues.remove(filepath)
             Log.i("LocalStorage", filenameIds.toString())
@@ -159,6 +161,7 @@ class BrowseActivity : AppCompatActivity() {
                 val options = StorageDownloadFileOptions.builder()
                     .accessLevel(StorageAccessLevel.PRIVATE)
                     .build()
+                var i = cloudExtra.size
                 cloudExtra.forEach { item ->
                     Log.i("CloudSync: cloud", "Cacheing ${item} to ${applicationContext.filesDir}, ${filepath}")
                     val file = File("${applicationContext.filesDir}/${item}.jpg")
@@ -178,7 +181,10 @@ class BrowseActivity : AppCompatActivity() {
                                 val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
                                 myEdit.putString(item, "test")
                                 myEdit.commit()
-                                recreate()
+                                i-=1
+                                if (i==0){
+                                    recreate()
+                                }
                             }catch (e: Exception){
                                 Log.e("CloudSync: cloud", "Copy cache to gallery failed", e)
                             }
