@@ -16,6 +16,7 @@ import org.tensorflow.lite.examples.plantie.R
 class MainActivity : AppCompatActivity() {
     private var openCameraButton: Button? = null
     private var openBrowseButton: Button? = null
+    private var openMapButton: Button? = null
     private var loginPageButton: Button? = null
     private var signUpPageButton: Button? = null
     private var logoutButton: Button? = null
@@ -26,12 +27,14 @@ class MainActivity : AppCompatActivity() {
 
         openCameraButton = findViewById<Button>(R.id.button_open_camera)
         openBrowseButton = findViewById<Button>(R.id.button_open_browse)
+        openMapButton = findViewById<Button>(R.id.button_open_map)
         loginPageButton = findViewById<Button>(R.id.button_main_to_login_page)
         signUpPageButton = findViewById<Button>(R.id.button_main_to_sign_up_page)
         logoutButton = findViewById<Button>(R.id.button_main_logout)
 
         openCameraButton!!.setOnClickListener{ openCameraPage() }
         openBrowseButton!!.setOnClickListener{ openBrowsePage() }
+        openMapButton!!.setOnClickListener{ openMapPage() }
         loginPageButton!!.setOnClickListener{ openLoginPage() }
         signUpPageButton!!.setOnClickListener{ openSignUpPage() }
         logoutButton!!.setOnClickListener{ logout() }
@@ -66,6 +69,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun openBrowsePage() {
         intent = Intent(this, BrowseActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun openMapPage() {
+        intent = Intent(this, MapsActivity::class.java)
         startActivity(intent)
     }
 

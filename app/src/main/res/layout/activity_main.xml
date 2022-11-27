@@ -27,7 +27,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".4"
+            app:layout_constraintVertical_bias=".35"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -60,6 +60,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_open_camera"
+            app:layout_constraintBottom_toTopOf="@+id/button_open_map" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_open_map"
+            android:layout_width="255dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="20dp"
+            android:text="Map"
+            android:drawableLeft="@drawable/ic_baseline_bookmark_24"
+            android:paddingStart="60dp"
+            android:paddingEnd="40dp"
+            android:textColor="@color/white"
+            android:background="@drawable/customisedbtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_open_browse"
             app:layout_constraintBottom_toTopOf="@+id/button_main_to_login_page" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -72,10 +88,10 @@
             android:paddingStart="60dp"
             android:paddingEnd="50dp"
             android:textColor="@color/white"
-            android:background="@drawable/customisedbtn"
+            android:background="@drawable/bluecustomisedbtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_open_browse"
+            app:layout_constraintTop_toBottomOf="@+id/button_open_map"
             app:layout_constraintBottom_toTopOf="@+id/button_main_to_sign_up_page" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -88,7 +104,7 @@
             android:paddingStart="60dp"
             android:paddingEnd="50dp"
             android:textColor="@color/white"
-            android:background="@drawable/bluecustomisedbtn"
+            android:background="@drawable/customisedbtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_main_to_login_page"
@@ -98,7 +114,7 @@
             android:id="@+id/button_main_logout"
             android:layout_width="110dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:text="Logout"
             android:background="@drawable/logoutbtn"
             android:textColor="#3C4048"
