@@ -94,6 +94,22 @@
             app:layout_constraintTop_toBottomOf="@+id/button_main_to_login_page"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+<<<<<<< Updated upstream
+=======
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_main_logout"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:text="Logout"
+            android:background="@drawable/logoutbtn"
+            android:textColor="#3C4048"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_main_to_login_page" />
+
+>>>>>>> Stashed changes
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
