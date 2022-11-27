@@ -5,12 +5,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.*
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintSet.Layout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,9 +19,9 @@ import com.amplifyframework.storage.StorageAccessLevel
 import com.amplifyframework.storage.options.StorageDownloadFileOptions
 import com.amplifyframework.storage.options.StorageListOptions
 import com.amplifyframework.storage.options.StorageUploadFileOptions
-import kotlinx.coroutines.delay
 import org.tensorflow.lite.examples.plantie.R
 import java.io.File
+
 
 class BrowseActivity : AppCompatActivity() {
     private var gridLayout: GridLayout? = null
@@ -141,7 +140,7 @@ class BrowseActivity : AppCompatActivity() {
                 val cardList = arrayListOf<CardModel>()
 
                 for (i in filenameIds.indices) {
-                    val temp = filepath + "/" + filenameIds[i] + ".jpg"
+                    val temp = filepath + "/" + filenameIds[i]
                     Log.i("CardList", temp)
                     Log.i("CardList", filenameValues[i].toString())
                     Log.i("CardList", filenameIds[i].toString())
@@ -153,7 +152,6 @@ class BrowseActivity : AppCompatActivity() {
                 recyclerView = findViewById(R.id.recycler_view)
                 recyclerView.layoutManager = GridLayoutManager(this, 2)
                 recyclerView.adapter = BrowseAdapter(cardList)
-                return@Runnable
             }
             if (!cloudExtra.isEmpty()){//cloud has more photos
                 //download photo from cloud
@@ -180,6 +178,7 @@ class BrowseActivity : AppCompatActivity() {
                                 val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
                                 myEdit.putString(item, "test")
                                 myEdit.commit()
+                                recreate()
                             }catch (e: Exception){
                                 Log.e("CloudSync: cloud", "Copy cache to gallery failed", e)
                             }
@@ -220,7 +219,6 @@ class BrowseActivity : AppCompatActivity() {
                     }
 
                 }
-
                 //checking complete, pass info to page
                 val cardList = arrayListOf<CardModel>()
 
