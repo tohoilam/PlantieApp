@@ -2,6 +2,7 @@ package com.projects.plantie
 
 import android.Manifest
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
@@ -125,7 +126,8 @@ class BrowseActivity : AppCompatActivity() {
             Log.i("LocalStorage", filepath!!)
             val temp = mutableListOf<String>()
             filenameIds.forEach{item ->
-                temp.add(item.substring(0, item.lastIndexOf(".")))
+                if (item.lastIndexOf(".") > 0) temp.add(item.substring(0, item.lastIndexOf(".")))
+                else temp.add(item)
             }
             //compare local and cloud
             var cloudExtra = cloudfilenameIds.minus(temp)
@@ -135,6 +137,23 @@ class BrowseActivity : AppCompatActivity() {
             if (cloudExtra.isEmpty() && localExtra.isEmpty()){//completely sync
                 //nothing to do
                 Log.i("CloudSync", "Cloud sync with local, skipping")
+                //checking complete, pass info to page
+                val cardList = arrayListOf<CardModel>()
+
+                for (i in filenameIds.indices) {
+                    val temp = filepath + "/" + filenameIds[i] + ".jpg"
+                    Log.i("CardList", temp)
+                    Log.i("CardList", filenameValues[i].toString())
+                    Log.i("CardList", filenameIds[i].toString())
+                    cardList.add(CardModel(R.drawable.lilyvalley, filenameValues[i].toString(), filenameIds[i].toString(), temp))
+                }
+
+                Log.d("browse_final", "Adapter Browse")
+
+                recyclerView = findViewById(R.id.recycler_view)
+                recyclerView.layoutManager = GridLayoutManager(this, 2)
+                recyclerView.adapter = BrowseAdapter(cardList)
+                return@Runnable
             }
             if (!cloudExtra.isEmpty()){//cloud has more photos
                 //download photo from cloud
@@ -156,6 +175,11 @@ class BrowseActivity : AppCompatActivity() {
                                 }
                                 var copyToLocal = file.copyTo(path!!,true)
                                 Log.i("CloudSync: cloud", "Saved to: ${copyToLocal}, ${filepath}/${item}.jpg")
+                                //save info to local
+                                val sharedPreferences: SharedPreferences = getSharedPreferences("Plantie", MODE_PRIVATE)
+                                val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
+                                myEdit.putString(item, "test")
+                                myEdit.commit()
                             }catch (e: Exception){
                                 Log.e("CloudSync: cloud", "Copy cache to gallery failed", e)
                             }
@@ -204,6 +228,7 @@ class BrowseActivity : AppCompatActivity() {
                     val temp = filepath + "/" + filenameIds[i]
                     Log.i("CardList", temp)
                     Log.i("CardList", filenameValues[i].toString())
+                    Log.i("CardList", filenameIds[i].toString())
                     cardList.add(CardModel(R.drawable.lilyvalley, filenameValues[i].toString(), filenameIds[i].toString(), temp))
                 }
 
@@ -233,11 +258,12 @@ class BrowseActivity : AppCompatActivity() {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS =
             mutableListOf (
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
             ).apply {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    add(Manifest.permission.READ_EXTERNAL_STORAGE)
                 }
             }.toTypedArray()
     }
