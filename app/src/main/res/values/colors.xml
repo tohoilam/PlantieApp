@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="rounded_btn">#98869B</color>
     <color name="blue_rounded_btn">#216999</color>
+    <color name="logout_btn">#90EAEAEA</color>
 </resources>
