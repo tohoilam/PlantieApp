@@ -127,6 +127,8 @@ class BrowseActivity : AppCompatActivity() {
                 else temp.add(item)
             }
             //compare local and cloud
+            Log.i("CloudSync: filenameids", filenameIds.toString())
+            Log.i("CloudSync: cloudids", cloudfilenameIds.toString())
             var cloudExtra = cloudfilenameIds.minus(temp)
             Log.i("CloudSync: cloudextra", cloudExtra.toString())
             var localExtra = temp.minus(cloudfilenameIds)
@@ -153,7 +155,7 @@ class BrowseActivity : AppCompatActivity() {
                 recyclerView.layoutManager = GridLayoutManager(this, 2)
                 recyclerView.adapter = BrowseAdapter(cardList)
             }
-            if (!cloudExtra.isEmpty()){//cloud has more photos
+            if (!cloudExtra.isEmpty()) {//cloud has more photos
                 //download photo from cloud
                 Log.i("CloudSync: cloud", "cloud has more photos, sync attempt")
                 val options = StorageDownloadFileOptions.builder()
@@ -161,87 +163,94 @@ class BrowseActivity : AppCompatActivity() {
                     .build()
                 var i = cloudExtra.size
                 cloudExtra.forEach { item ->
-                    Log.i("CloudSync: cloud", "Cacheing ${item} to ${applicationContext.filesDir}, ${filepath}")
+                    Log.i(
+                        "CloudSync: cloud",
+                        "Cacheing ${item} to ${applicationContext.filesDir}, ${filepath}"
+                    )
                     val file = File("${applicationContext.filesDir}/${item}.jpg")
                     Amplify.Storage.downloadFile(item, file, options,
                         {
                             Log.i("CloudSync: cloud", "Successfully downloaded: ${it.file.name}")
-                            var path = File(filepath+"/${item}.jpg/")
+                            var path = File(filepath + "/${item}.jpg/")
                             Log.i("CloudSync: cloud", "Saving to: ${path}")
-                            try{
-                                if (path.exists()){
+                            try {
+                                if (path.exists()) {
                                     path.delete()
                                 }
-                                var copyToLocal = file.copyTo(path!!,true)
-                                Log.i("CloudSync: cloud", "Saved to: ${copyToLocal}, ${filepath}/${item}.jpg")
+                                var copyToLocal = file.copyTo(path!!, true)
+                                Log.i(
+                                    "CloudSync: cloud",
+                                    "Saved to: ${copyToLocal}, ${filepath}/${item}.jpg"
+                                )
                                 //save info to local
-                                val sharedPreferences: SharedPreferences = getSharedPreferences("Plantie", MODE_PRIVATE)
+                                val sharedPreferences: SharedPreferences =
+                                    getSharedPreferences("Plantie", MODE_PRIVATE)
                                 val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
-                                myEdit.putString(item, "test")
+                                myEdit.putString(item, item)
                                 myEdit.commit()
-                                i-=1
-                                if (i==0){
+                                i -= 1
+                                if (i == 0) {
                                     recreate()
                                 }
-                            }catch (e: Exception){
+                            } catch (e: Exception) {
                                 Log.e("CloudSync: cloud", "Copy cache to gallery failed", e)
                             }
                         },
                         { Log.e("CloudSync: cloud", "Download Failure", it) }
                     )
                 }
-                if (!localExtra.isEmpty()) {//local has more photos
-                    //save local to cloud
-                    Log.i("CloudSync: local", "local has more photos, sync attempt")
-                    val options = StorageUploadFileOptions.builder()
-                        .accessLevel(StorageAccessLevel.PRIVATE)
-                        .build()
-                    localExtra.forEach { time ->
-                        Log.i("AmplifyS3", "Trying to sync local to cloud from ${time}")
-                        Amplify.Storage.uploadFile(time, File(filepath+"/${time}.jpg"), options,
-                            {
-                                Log.i("AmplifyS3", "Successfully uploaded: ${it.key}")
-                                var msg = "Image uploaded"
-                                Handler(Looper.getMainLooper()).post {
-                                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
-                                }
-                            },
-                            {
-                                Log.e("AmplifyS3", "Upload failed", it)
-                                Log.i("S3Exception", it.message.toString())
-                                Log.i("S3Exception", it.cause.toString())
-                                var msg = ""
-                                msg = when (it.message){
-                                    "Something went wrong with your AWS S3 Storage upload file operation" -> "Sync with cloud failed. Please login if you still haven't"
-                                    else -> "Fatal error"
-                                }
-                                Handler(Looper.getMainLooper()).post {
-                                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                        )
-                    }
-
-                }
-                //checking complete, pass info to page
-                val cardList = arrayListOf<CardModel>()
-
-                for (i in filenameIds.indices) {
-                    val temp = filepath + "/" + filenameIds[i]
-                    Log.i("CardList", temp)
-                    var data = filenameIds[i].split(";")
-                    Log.i("CardList", data.toString())
-                    Log.i("CardList", filenameIds[i].toString())
-                    cardList.add(CardModel(R.drawable.lilyvalley, data[1], data[0], temp, //data[2], data[3]
-                    ))
-                }
-
-                Log.d("browse_final", "Adapter Browse")
-
-                recyclerView = findViewById(R.id.recycler_view)
-                recyclerView.layoutManager = GridLayoutManager(this, 2)
-                recyclerView.adapter = BrowseAdapter(cardList)
             }
+            if (!localExtra.isEmpty()) {//local has more photos
+                //save local to cloud
+                Log.i("CloudSync: local", "local has more photos, sync attempt")
+                val options = StorageUploadFileOptions.builder()
+                    .accessLevel(StorageAccessLevel.PRIVATE)
+                    .build()
+                localExtra.forEach { time ->
+                    Log.i("AmplifyS3", "Trying to sync local to cloud from ${time}")
+                    Amplify.Storage.uploadFile(time, File(filepath+"/${time}.jpg"), options,
+                        {
+                            Log.i("AmplifyS3", "Successfully uploaded: ${it.key}")
+                            var msg = "Image uploaded"
+                            Handler(Looper.getMainLooper()).post {
+                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        {
+                            Log.e("AmplifyS3", "Upload failed", it)
+                            Log.i("S3Exception", it.message.toString())
+                            Log.i("S3Exception", it.cause.toString())
+                            var msg = ""
+                            msg = when (it.message){
+                                "Something went wrong with your AWS S3 Storage upload file operation" -> "Sync with cloud failed. Please login if you still haven't"
+                                else -> "Fatal error"
+                            }
+                            Handler(Looper.getMainLooper()).post {
+                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    )
+                }
+
+            }
+            //checking complete, pass info to page
+            val cardList = arrayListOf<CardModel>()
+
+            for (i in filenameIds.indices) {
+                val temp = filepath + "/" + filenameIds[i]
+                Log.i("CardList", temp)
+                var data = filenameIds[i].split(";")
+                Log.i("CardList", data.toString())
+                Log.i("CardList", filenameIds[i].toString())
+                cardList.add(CardModel(R.drawable.lilyvalley, data[1], data[0], temp, //data[2], data[3]
+                ))
+            }
+
+            Log.d("browse_final", "Adapter Browse")
+
+            recyclerView = findViewById(R.id.recycler_view)
+            recyclerView.layoutManager = GridLayoutManager(this, 2)
+            recyclerView.adapter = BrowseAdapter(cardList)
 
         })
     }
@@ -264,10 +273,14 @@ class BrowseActivity : AppCompatActivity() {
             mutableListOf (
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS
             ).apply {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     add(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    add(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+                    add(Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS)
                 }
             }.toTypedArray()
     }
