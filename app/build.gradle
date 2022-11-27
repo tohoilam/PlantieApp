@@ -22,6 +22,7 @@ plugins {
 
     // Kotlin kapt is recommended for data binding
     id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -108,6 +109,10 @@ dependencies {
     implementation "androidx.camera:camera-core:${camerax_version}"
 //    implementation "androidx.camera:camera-video:${camerax_version}"
     implementation "androidx.camera:camera-extensions:${camerax_version}"
+
+    // Google
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
 
     //exif
     implementation("androidx.exifinterface:exifinterface:1.3.5")
