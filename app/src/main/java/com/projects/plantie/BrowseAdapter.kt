@@ -35,12 +35,15 @@ class BrowseAdapter(private val cardList: List<CardModel>) : RecyclerView.Adapte
             holder.flowerImage.setImageResource(currentItem.image)
         }
 
-        holder.flowerName.text = currentItem.name
+        holder.flowerName.text = currentItem.name.replace("_", " ").replaceFirstChar(Char::titlecase)
         holder.captureTime.text = currentItem.date
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, InfoActivity::class.java)
             intent.putExtra("flowerName", currentItem.name)
+            if (currentItem.imagePath != "") {
+                intent.putExtra("localImage", currentItem.imagePath)
+            }
             holder.itemView.context.startActivity(intent)
         }
     }
