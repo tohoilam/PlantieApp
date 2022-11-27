@@ -102,8 +102,8 @@ class MainActivity : AppCompatActivity() {
                         },
                         { error -> Log.e("AmplifyCheckLogin", "Failed to fetch auth session", error) }
                     )
-                    val preferences = getSharedPreferences("Plantie", 0)
-                    preferences.edit().clear().commit()
+                    //val preferences = getSharedPreferences("Plantie", 0)
+                    //preferences.edit().clear().commit()
                 }
             },
             { Log.e("AuthQuickstart", "Sign out failed", it) }

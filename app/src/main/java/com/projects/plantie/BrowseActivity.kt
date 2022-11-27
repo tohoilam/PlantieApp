@@ -186,7 +186,7 @@ class BrowseActivity : AppCompatActivity() {
                                 val sharedPreferences: SharedPreferences =
                                     getSharedPreferences("Plantie", MODE_PRIVATE)
                                 val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
-                                myEdit.putString(item, "test")
+                                myEdit.putString(item, item)
                                 myEdit.commit()
                                 i -= 1
                                 if (i == 0) {
