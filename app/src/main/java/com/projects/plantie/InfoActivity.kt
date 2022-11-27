@@ -165,7 +165,7 @@ class InfoActivity : AppCompatActivity() {
                 return urlPrefix + "91726/lilium-lancifolium-splendens-(ixc-d)" + urlPostfix
             }
             "tulip" -> {
-                return urlPrefix + "346666/tulipa-budlight-(6)" + urlPostfix
+                return urlPrefix + "346666/tulipa-budlldog-(7)" + urlPostfix
             }
             "cowslip" -> {
                 return urlPrefix + "13892/primula-veris-(pr)" + urlPostfix
@@ -200,70 +200,70 @@ class InfoActivity : AppCompatActivity() {
         override fun doInBackground(vararg p0: String?): String? {
 
             // From Json
-            if (flowerName == "daffodil" || flowerName == "sunflower" || flowerName == "lily_valley") {
-                val fileContent = resources.openRawResource(R.raw.flowerinfo)
-                    .bufferedReader().use { it.readText() }
+//            if (flowerName == "daffodil" || flowerName == "sunflower" || flowerName == "lily_valley") {
+            val fileContent = resources.openRawResource(R.raw.flowerinfo)
+                .bufferedReader().use { it.readText() }
 
-                val flowerInfos: InfoModel = Gson().fromJson(fileContent, object : TypeToken<InfoModel>() {}.type)
+            val flowerInfos: InfoModel = Gson().fromJson(fileContent, object : TypeToken<InfoModel>() {}.type)
 
-                for (flower in flowerInfos.flower_info) {
-                    if (flower.name == flowerName) {
-                        scientificName = flower.scientific_name
-                        description = flower.description
-                        maxHeight = flower.max_height
-                        maxSpread = flower.max_spread
-                        timeToMaxHeight = flower.time_to_max_height
-                        conditionA = if (flower.conditions.size >= 1) flower.conditions[0] else ""
-                        conditionB = if (flower.conditions.size >= 2) flower.conditions[1] else ""
-                        conditionC = if (flower.conditions.size >= 3) flower.conditions[2] else ""
-                        conditionD = if (flower.conditions.size >= 4) flower.conditions[3] else ""
-                        moisture = flower.moisture
-                        ph = flower.ph
+            for (flower in flowerInfos.flower_info) {
+                if (flower.name == flowerName) {
+                    scientificName = flower.scientific_name
+                    description = flower.description
+                    maxHeight = flower.max_height
+                    maxSpread = flower.max_spread
+                    timeToMaxHeight = flower.time_to_max_height
+                    conditionA = if (flower.conditions.size >= 1) flower.conditions[0] else ""
+                    conditionB = if (flower.conditions.size >= 2) flower.conditions[1] else ""
+                    conditionC = if (flower.conditions.size >= 3) flower.conditions[2] else ""
+                    conditionD = if (flower.conditions.size >= 4) flower.conditions[3] else ""
+                    moisture = flower.moisture
+                    ph = flower.ph
 
-                        break
-                    }
+                    break
                 }
             }
+//            }
             // Web Scraping
-            else {
-                var document: Document? = null
-
-                try {
-                    Log.d("InfoActivity", "Connecting to plant website")
-                    document = Jsoup.connect(url).get()
-                    Log.d("InfoActivity", "Successful plant website")
-                } catch (e: IOException) {
-                    e.printStackTrace()
-
-                    Log.d("InfoActivity", "Failed")
-                }
-
-                if (document != null) {
-                    // Start scraping
-                    scientificName = document.selectFirst("h1 span")!!.text()
-                    description =
-                        document.selectFirst(".l-module__content > p.ng-star-inserted")!!.text()
-                    maxHeight =
-                        document.select(".plant-attributes__panel:nth-child(1) .plant-attributes__content div:has(> h6)")[0]!!.ownText()
-                    maxSpread =
-                        document.select(".plant-attributes__panel:nth-child(1) .plant-attributes__content div:has(> h6)")[2]!!.ownText()
-                    timeToMaxHeight =
-                        document.select(".plant-attributes__panel:nth-child(1) .plant-attributes__content div:has(> h6)")[1]!!.ownText()
-
-                    val conditionList =
-                        document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div.flag__body")
-                    conditionA = if (conditionList.size >= 1) conditionList[0]!!.text() else ""
-                    conditionB = if (conditionList.size >= 2) conditionList[1]!!.text() else ""
-                    conditionC = if (conditionList.size >= 3) conditionList[2]!!.text() else ""
-                    conditionD = if (conditionList.size >= 4) conditionList[3]!!.text() else ""
-                    moisture =
-                        document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div:has(> h6)")[0]!!.text()
-                            .replace("Moisture", "")
-                    ph =
-                        document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div:has(> h6)")[1]!!.text()
-                            .replace("pH", "")
-                }
-            }
+//            else {
+//                var document: Document? = null
+//
+//                try {
+//                    Log.d("InfoActivity", "Connecting to plant website")
+//                    document = Jsoup.connect(url).get()
+//                    Log.d("InfoActivity", "Successful plant website")
+//                } catch (e: IOException) {
+//                    e.printStackTrace()
+//
+//                    Log.d("InfoActivity", "Failed")
+//                }
+//
+//                if (document != null) {
+//                    // Start scraping
+//                    scientificName = document.selectFirst("h1 span")!!.text()
+//                    description =
+//                        document.selectFirst(".l-module__content > p.ng-star-inserted")!!.text()
+//                    maxHeight =
+//                        document.select(".plant-attributes__panel:nth-child(1) .plant-attributes__content div:has(> h6)")[0]!!.ownText()
+//                    maxSpread =
+//                        document.select(".plant-attributes__panel:nth-child(1) .plant-attributes__content div:has(> h6)")[2]!!.ownText()
+//                    timeToMaxHeight =
+//                        document.select(".plant-attributes__panel:nth-child(1) .plant-attributes__content div:has(> h6)")[1]!!.ownText()
+//
+//                    val conditionList =
+//                        document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div.flag__body")
+//                    conditionA = if (conditionList.size >= 1) conditionList[0]!!.text() else ""
+//                    conditionB = if (conditionList.size >= 2) conditionList[1]!!.text() else ""
+//                    conditionC = if (conditionList.size >= 3) conditionList[2]!!.text() else ""
+//                    conditionD = if (conditionList.size >= 4) conditionList[3]!!.text() else ""
+//                    moisture =
+//                        document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div:has(> h6)")[0]!!.text()
+//                            .replace("Moisture", "")
+//                    ph =
+//                        document.select(".plant-attributes__panel:nth-child(2) .plant-attributes__content div:has(> h6)")[1]!!.text()
+//                            .replace("pH", "")
+//                }
+//            }
 
             return "Successful"
         }
