@@ -421,8 +421,8 @@ class CameraActivity : AppCompatActivity() {
                                                 .addBody("{\"name\": \"Mow the lawn\"}".toByteArray())
                                                 .build()
                                             Amplify.API.post(options,
-                                                { Log.i("MyAmplifyApp", "POST succeeded: $it") },
-                                                { Log.e("MyAmplifyApp", "POST failed", it) }
+                                                { Log.i("MyAmplifyApp", "POST succeeded: ${it.toString()}") },
+                                                { Log.e("MyAmplifyApp", "POST failed: ${it.toString()}") }
                                             )
                                         },
                                         { Log.e("AmplifyAPI", "GET failed", it) }
