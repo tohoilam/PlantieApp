@@ -28,36 +28,77 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-
+<!--                <ImageButton-->
+<!--                    android:id="@+id/image_capture_button"-->
+<!--                    android:layout_width="@dimen/round_button_large"-->
+<!--                    android:layout_height="@dimen/round_button_large"-->
+<!--                    android:layout_marginBottom="@dimen/shutter_button_margin"-->
+<!--                    android:background="@drawable/ic_shutter"-->
+<!--                    android:contentDescription="@string/capture_button_alt"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                    app:layout_constraintRight_toRightOf="parent" />-->
         </androidx.camera.view.PreviewView>
 
-<!--        <Button-->
-<!--            android:id="@+id/identitfy_flower"-->
-<!--            android:layout_width="wrap_content"-->
+<!--        APP logo bar -->
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            android:layout_gravity="top"-->
+<!--            android:background="@color/white">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:contentDescription="@string/plantie_logo_description"-->
+<!--                    android:src="@drawable/plantie_logo" />-->
+
+<!--        </androidx.appcompat.widget.Toolbar>-->
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recognitionResults"-->
+<!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:insetLeft="290dp"-->
-<!--            android:text="Identitfy Flower" />-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:orientation="vertical"-->
+<!--            app:layoutManager="LinearLayoutManager"  />-->
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="top"
-            android:background="@color/white">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/plantie_logo_description"
-                    android:src="@drawable/plantie_logo" />
-
-        </androidx.appcompat.widget.Toolbar>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recognitionResults"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#8000"
             android:layout_gravity="bottom"
-            android:orientation="vertical"
-            app:layoutManager="LinearLayoutManager"  />
+            android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recognitionResults"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutManager="LinearLayoutManager"  />
+
+                <ImageButton
+                    android:id="@+id/image_capture_button"
+                    android:layout_width="@dimen/round_button_large"
+                    android:layout_height="@dimen/round_button_large"
+                    android:background="@drawable/ic_shutter"
+                    android:contentDescription="@string/capture_button_alt"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center" />
+
+        </LinearLayout>
+
+<!--        <Button-->
+<!--            android:id="@+id/get_location_button"-->
+<!--            android:layout_width="255dp"-->
+<!--            android:layout_height="64dp"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:layout_marginLeft="120dp"-->
+<!--            android:text="Get Location"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/image_capture_button" />-->
+
 </merge>

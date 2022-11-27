@@ -58,55 +58,55 @@ class InfoActivity : AppCompatActivity() {
         }
 
         when (flowerName) {
-            "Buttercup" -> {
+            "buttercup" -> {
                 image.setImageResource(R.drawable.buttercup)
             }
-            "Colts'Foot" -> {
+            "colts_foot" -> {
                 image.setImageResource(R.drawable.coltsfoot)
             }
-            "Daffodil" -> {
+            "daffodil" -> {
                 image.setImageResource(R.drawable.daffodil)
             }
-            "Daisy" -> {
+            "daisy" -> {
                 image.setImageResource(R.drawable.daisy)
             }
-            "Dandelion" -> {
+            "dandelion" -> {
                 image.setImageResource(R.drawable.dandelion)
             }
-            "Fritillary" -> {
+            "fritillary" -> {
                 image.setImageResource(R.drawable.fritillary)
             }
-            "Iris" -> {
+            "iris" -> {
                 image.setImageResource(R.drawable.iris)
             }
-            "Pansy" -> {
+            "pansy" -> {
                 image.setImageResource(R.drawable.pansy)
             }
-            "Sunflower" -> {
+            "sunflower" -> {
                 image.setImageResource(R.drawable.sunflower)
             }
-            "Windflower" -> {
+            "windflower" -> {
                 image.setImageResource(R.drawable.windflower)
             }
-            "Snowdrop" -> {
+            "snowdrop" -> {
                 image.setImageResource(R.drawable.snowdrop)
             }
-            "LilyValley" -> {
+            "lily_valley" -> {
                 image.setImageResource(R.drawable.lilyvalley)
             }
-            "Bluebell" -> {
+            "bluebell" -> {
                 image.setImageResource(R.drawable.bluebell)
             }
-            "Crocus" -> {
+            "crocus" -> {
                 image.setImageResource(R.drawable.crocus)
             }
-            "Tigerlily" -> {
+            "tigerlily" -> {
                 image.setImageResource(R.drawable.tigerlily)
             }
-            "Tulip" -> {
+            "tulip" -> {
                 image.setImageResource(R.drawable.tulip)
             }
-            "Cowslip" -> {
+            "cowslip" -> {
                 image.setImageResource(R.drawable.cowslip)
             }
             else -> {
@@ -118,55 +118,55 @@ class InfoActivity : AppCompatActivity() {
 
     private fun getUrl(): String {
         when (flowerName) {
-            "Buttercup" -> {
+            "buttercup" -> {
                 return urlPrefix + "195335/hemerocallis-buttercup-parade" + urlPostfix
             }
-            "Colts'Foot" -> {
+            "colts_foot" -> {
                 return urlPrefix + "18563/tussilago-farfara" + urlPostfix
             }
-            "Daffodil" -> {
+            "daffodil" -> {
                 return urlPrefix + "24054/narcissus-assoanus-(13)" + urlPostfix
             }
-            "Daisy" -> {
+            "daisy" -> {
                 return urlPrefix + "94326/bellis-perennis" + urlPostfix
             }
-            "Dandelion" -> {
+            "dandelion" -> {
                 return urlPrefix + "232327/taraxacum-officinale" + urlPostfix
             }
-            "Fritillary" -> {
+            "fritillary" -> {
                 return urlPrefix + "7403/fritillaria-meleagris" + urlPostfix
             }
-            "Iris" -> {
+            "iris" -> {
                 return urlPrefix + "47762/iris-pseudacorus-alba" + urlPostfix
             }
-            "Pansy" -> {
+            "pansy" -> {
                 return urlPrefix + "18990/viola-cornuta" + urlPostfix
             }
-            "Sunflower" -> {
+            "sunflower" -> {
                 return urlPrefix + "105515/helianthus-annuus" + urlPostfix
             }
-            "Windflower" -> {
+            "windflower" -> {
                 return urlPrefix + "49988/anemone-vernalis" + urlPostfix
             }
-            "Snowdrop" -> {
+            "snowdrop" -> {
                 return urlPrefix + "7568/galanthus-nivalis" + urlPostfix
             }
-            "LilyValley" -> {
+            "lily_valley" -> {
                 return urlPrefix + "4327/convallaria-majalis" + urlPostfix
             }
-            "Bluebell" -> {
+            "bluebell" -> {
                 return urlPrefix + "8890/hyacinthoides-non-scripta" + urlPostfix
             }
-            "Crocus" -> {
-                return urlPrefix + "29659/crocus-vernus" + urlPostfix
+            "crocus" -> {
+                return urlPrefix + "29659/crocus-minimus-spring-beauty" + urlPostfix
             }
-            "Tigerlily" -> {
+            "tigerlily" -> {
                 return urlPrefix + "91726/lilium-lancifolium-splendens-(ixc-d)" + urlPostfix
             }
-            "Tulip" -> {
+            "tulip" -> {
                 return urlPrefix + "346666/tulipa-budlight-(6)" + urlPostfix
             }
-            "Cowslip" -> {
+            "cowslip" -> {
                 return urlPrefix + "13892/primula-veris-(pr)" + urlPostfix
             }
             else -> {
@@ -249,7 +249,7 @@ class InfoActivity : AppCompatActivity() {
             changeImage()
 
             // Write texts
-            plantNameBlock!!.text = flowerName
+            plantNameBlock!!.text = flowerName!!.replace("_", " ").replaceFirstChar(Char::titlecase)
             scientificNameBlock!!.text = scientificName
             descriptionBlock!!.text = description
             maxHeightBlock!!.text = maxHeight

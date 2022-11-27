@@ -10,6 +10,9 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.storage.StorageAccessLevel
+import com.amplifyframework.storage.options.StorageListOptions
 import org.tensorflow.lite.examples.plantie.R
 
 class BrowseActivity : AppCompatActivity() {
@@ -21,16 +24,70 @@ class BrowseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_browse)
         gridLayout = findViewById(R.id.browse_box)
 
-        val cardList = arrayListOf<CardModel>(CardModel(R.drawable.lilyvalley, "LilyValley", "03 Jan 2022, 03:45"),
-                                                CardModel(R.drawable.bluebell, "Bluebell", "03 Jan 2022, 03:45"),
-                                                CardModel(R.drawable.cowslip, "Cowslip", "03 Jan 2022, 03:45"))
+        Amplify.Auth.fetchAuthSession(
+            {
+                Log.i("AmplifyCheckLogin", "Auth session = $it")
+                runOnUiThread(Runnable {
+                    //check local
+                    val sharedPreferences = getSharedPreferences("Plantie", MODE_PRIVATE)
+                    val filenameIds = sharedPreferences.all.map { it.key }.toMutableList()
+                    val filenameValues = sharedPreferences.all.map { it.value }.toMutableList()
+                    val filepath = sharedPreferences.getString("filepath", "")
+                    filenameIds.remove("filepath")
+                    filenameValues.remove(filepath)
+                    Log.i("LocalStorage", filenameIds.toString())
+                    Log.i("LocalStorage", filepath!!)
+                    if (it.isSignedIn){
+                        val options = StorageListOptions.builder()
+                            .accessLevel(StorageAccessLevel.PRIVATE)
+                            .build()
+                        val cloudfilenameIds = mutableListOf<String>()
 
-        Log.d("browse_final", "Adapter Browse")
+                        Amplify.Storage.list("", options,
+                            { result ->
+                                result.items.forEach { item ->
+                                    Log.i("AmplifyS3", "Item: ${item.key}")
+                                    cloudfilenameIds.add(item.key)
+                                }
+                            },
+                            { Log.e("AmplifyS3", "List failure", it) }
+                        )
+                        //compare local and cloud
+                        var cloudExtra = cloudfilenameIds.minus(filenameIds)
+                        Log.i("CloudSync", cloudExtra.toString())
+                        var localExtra = filenameIds.minus(cloudfilenameIds)
+                        Log.i("CloudSync", localExtra.toString())
+                        //TODO: syncing between local and cloud
+                        if (cloudExtra.isEmpty() && localExtra.isEmpty()){//completely sync
 
-        recyclerView = findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
-        recyclerView.adapter = BrowseAdapter(cardList)
+                        } else if (cloudExtra.isEmpty()){//local has more photos
 
+                        } else if (localExtra.isEmpty()) {//cloud has more photos
+
+                        }
+                    }else{ //cloud not available, use local only
+
+                    }
+
+                    //checking complete, pass info to page
+                    val cardList = arrayListOf<CardModel>()
+
+                    for (i in filenameIds.indices) {
+                        val temp = filepath + "/" +filenameIds[i]
+                        Log.i("CardList", temp)
+                        Log.i("CardList", filenameValues[i].toString())
+                        cardList.add(CardModel(R.drawable.lilyvalley, filenameValues[i].toString(), filenameIds[i].toString(), temp))
+                    }
+
+                    Log.d("browse_final", "Adapter Browse")
+
+                    recyclerView = findViewById(R.id.recycler_view)
+                    recyclerView.layoutManager = GridLayoutManager(this, 2)
+                    recyclerView.adapter = BrowseAdapter(cardList)
+                })
+            },
+            { error -> Log.e("AmplifyCheckLogin", "Failed to fetch auth session", error) }
+        )
     }
 
     private fun addCard(plantName: String, dateTime: String) {
