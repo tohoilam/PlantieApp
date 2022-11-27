@@ -24,9 +24,10 @@
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="255sp"
         android:layout_height="wrap_content"
-        android:background="#8000"
+        android:background="#CDB275"
+        android:layout_gravity="top|center"
         android:orientation="horizontal">
 
         <TextView
@@ -39,7 +40,7 @@
             android:textColor="@color/white"
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:onClick="@{() -> recognitionItem.onClick()}"
-            tools:text="Orange" />
+            tools:text="Flower" />
 
         <TextView
             android:id="@+id/recognitionProb"
