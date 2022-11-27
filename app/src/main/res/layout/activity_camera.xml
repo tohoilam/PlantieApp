@@ -77,17 +77,17 @@
                     android:layout_gravity="center|end"
                     android:orientation="vertical">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/showInfo"
                             android:layout_width="50sp"
-                            android:layout_height="match_parent"
+                            android:layout_height="30sp"
                             android:layout_gravity="center"
-                            android:background="@drawable/shape_round"
+                            android:background="@drawable/shape_round_2"
+                            style="?android:attr/borderlessButtonStyle"
                             android:text="^"
                             android:textColor="@color/white"
-                            android:textSize="20sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            android:textSize="20sp">
+                        </androidx.appcompat.widget.AppCompatButton>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recognitionResults"
