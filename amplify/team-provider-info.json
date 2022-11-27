@@ -16,7 +16,17 @@
         "plantiec0b765d2": {}
       },
       "storage": {
-        "planties3": {}
+        "planties3": {},
+        "Plantie": {}
+      },
+      "function": {
+        "plantie2ac44d9f": {
+          "deploymentBucketName": "amplify-plantie-dev-05638-deployment",
+          "s3Key": "amplify-builds/plantie2ac44d9f-716b36583470722b3773-build.zip"
+        }
+      },
+      "api": {
+        "Plantie": {}
       }
     }
   }

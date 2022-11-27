@@ -1,0 +1,10 @@
+{
+  "resourceName": "Plantie",
+  "tableName": "Plantie",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}
