@@ -77,7 +77,7 @@ import java.util.concurrent.Executors
 
 // Constants
 private var flower_label: String = ""
-private const val MAX_RESULT_DISPLAY = 3 // Maximum number of results displayed
+private const val MAX_RESULT_DISPLAY = 2 // Maximum number of results displayed
 private var takePhotoButton: ImageButton? = null
 
 // Listener for the result of the ImageAnalyzer
