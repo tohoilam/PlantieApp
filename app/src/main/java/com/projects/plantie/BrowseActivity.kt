@@ -75,15 +75,11 @@ class BrowseActivity : AppCompatActivity() {
                         for (i in filenameIds.indices) {
                             val temp = filepath + "/" + filenameIds[i]
                             Log.i("CardList", temp)
-                            Log.i("CardList", filenameValues[i].toString())
-                            cardList.add(
-                                CardModel(
-                                    R.drawable.lilyvalley,
-                                    filenameValues[i].toString(),
-                                    filenameIds[i].toString(),
-                                    temp
-                                )
-                            )
+                            var data = filenameIds[i].split(";")
+                            Log.i("CardList", data.toString())
+                            Log.i("CardList", filenameIds[i].toString())
+                            cardList.add(CardModel(R.drawable.lilyvalley, data[1], data[0], temp, //data[2], data[3]
+                            ))
                         }
 
                         Log.d("browse_final", "Adapter Browse")
@@ -144,9 +140,11 @@ class BrowseActivity : AppCompatActivity() {
                 for (i in filenameIds.indices) {
                     val temp = filepath + "/" + filenameIds[i]
                     Log.i("CardList", temp)
-                    Log.i("CardList", filenameValues[i].toString())
+                    var data = filenameIds[i].split(";")
+                    Log.i("CardList", data.toString())
                     Log.i("CardList", filenameIds[i].toString())
-                    cardList.add(CardModel(R.drawable.lilyvalley, filenameValues[i].toString(), filenameIds[i].toString(), temp))
+                    cardList.add(CardModel(R.drawable.lilyvalley, data[1], data[0], temp, //data[2], data[3]
+                    ))
                 }
 
                 Log.d("browse_final", "Adapter Browse")
@@ -231,9 +229,11 @@ class BrowseActivity : AppCompatActivity() {
                 for (i in filenameIds.indices) {
                     val temp = filepath + "/" + filenameIds[i]
                     Log.i("CardList", temp)
-                    Log.i("CardList", filenameValues[i].toString())
+                    var data = filenameIds[i].split(";")
+                    Log.i("CardList", data.toString())
                     Log.i("CardList", filenameIds[i].toString())
-                    cardList.add(CardModel(R.drawable.lilyvalley, filenameValues[i].toString(), filenameIds[i].toString(), temp))
+                    cardList.add(CardModel(R.drawable.lilyvalley, data[1], data[0], temp, //data[2], data[3]
+                    ))
                 }
 
                 Log.d("browse_final", "Adapter Browse")

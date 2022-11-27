@@ -256,12 +256,15 @@ class CameraActivity : AppCompatActivity() {
         println("take photo")
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture ?: return
-
+        val gps = getLastKnownLocation()
+        val lat = gps[0]
+        val long = gps[1]
+        val label = flower_label
         // Create time stamped name and MediaStore entry.
         val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
             .format(System.currentTimeMillis())
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name+";"+label+";"+lat+";"+long)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
                 put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Plantie-Image")
@@ -302,7 +305,7 @@ class CameraActivity : AppCompatActivity() {
                     val realpath = getRealPathFromURI(photo_path!!).toString()
                     val filename = realpath.substring(realpath.lastIndexOf("/")+1);
                     val filepath = realpath.substring(0, realpath.lastIndexOf("/"));
-                    myEdit.putString(filename, label)
+                    myEdit.putString(filename, filename)
                     myEdit.putString("filepath", filepath)
                     myEdit.commit()
 
@@ -374,14 +377,6 @@ class CameraActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun uploadToDatabase(photo_path: Uri?, time: String?){
         println("Uploading to DB")
-        //val time = SimpleDateFormat(FILENAME_FORMAT).format(System.currentTimeMillis())
-        val gps = getLastKnownLocation()
-        val lat = gps[0]
-        val long = gps[1]
-
-        val label = flower_label
-
-
         val realpath = photo_path?.let { getRealPathFromURI(it) }
         Log.i("uploadToDatabase", realpath.toString())
         val options = StorageUploadFileOptions.builder()
@@ -401,7 +396,7 @@ class CameraActivity : AppCompatActivity() {
                                     Handler(Looper.getMainLooper()).post {
                                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
                                     }
-                                    //fetch newest sharedpreference
+                                    /*//fetch newest sharedpreference
                                     val session = authSession as AWSCognitoAuthSession
                                     var id = session.identityId.value.toString()
                                     Log.i("AmplifyCognito", "Cognito id: ${id}")
@@ -430,7 +425,7 @@ class CameraActivity : AppCompatActivity() {
                                             )
                                         },
                                         { Log.e("AmplifyAPI", "GET failed", it) }
-                                    )
+                                    )*/
 
                                 },
                                 {
