@@ -340,8 +340,8 @@ class CameraActivity : AppCompatActivity() {
     fun getLastKnownLocation(): DoubleArray {
         println("get LastKnownLocation")
         var gps = DoubleArray(2)
-        gps[0] = 0.0
-        gps[1] = 0.1
+        gps[0] = 22.283367
+        gps[1] = 114.136414
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location->
                 if (location != null) {

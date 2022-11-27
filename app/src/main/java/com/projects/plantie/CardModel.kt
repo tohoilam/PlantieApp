@@ -5,4 +5,6 @@ data class CardModel(
     val name: String,
     val date: String,
     val imagePath: String? = "",
+    val lat: Double = 22.3193,
+    val long: Double = 114.1694
 )
