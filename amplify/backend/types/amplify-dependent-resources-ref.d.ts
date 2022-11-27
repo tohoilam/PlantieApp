@@ -14,6 +14,29 @@ export type AmplifyDependentResourcesAttributes = {
         "planties3": {
             "BucketName": "string",
             "Region": "string"
+        },
+        "Plantie": {
+            "Name": "string",
+            "Arn": "string",
+            "StreamArn": "string",
+            "PartitionKeyName": "string",
+            "PartitionKeyType": "string",
+            "Region": "string"
+        }
+    },
+    "function": {
+        "plantie2ac44d9f": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        }
+    },
+    "api": {
+        "Plantie": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
         }
     }
 }

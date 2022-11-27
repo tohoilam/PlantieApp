@@ -82,10 +82,11 @@ dependencies {
 
 
     // Amplify
-    implementation 'com.amplifyframework:aws-api:1.37.6'
-    implementation 'com.amplifyframework:aws-datastore:1.37.6'
-    implementation 'com.amplifyframework:aws-auth-cognito:1.37.6'
-    implementation 'com.amplifyframework:aws-storage-s3:1.37.6'
+    implementation 'com.amplifyframework:core:1.37.7'
+    implementation 'com.amplifyframework:aws-api:1.37.7'
+    implementation 'com.amplifyframework:aws-datastore:1.37.7'
+    implementation 'com.amplifyframework:aws-auth-cognito:1.37.7'
+    implementation 'com.amplifyframework:aws-storage-s3:1.37.7'
     implementation 'com.google.android.gms:play-services-location:21.0.0'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'

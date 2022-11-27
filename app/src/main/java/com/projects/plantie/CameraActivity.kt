@@ -32,10 +32,7 @@ import android.graphics.Matrix
 import android.location.LocationManager
 import android.media.ExifInterface
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
@@ -54,6 +51,8 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.amplifyframework.api.rest.RestOptions
+import com.amplifyframework.auth.cognito.AWSCognitoAuthSession
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.storage.StorageAccessLevel
 import com.amplifyframework.storage.options.StorageUploadFileOptions
@@ -258,12 +257,15 @@ class CameraActivity : AppCompatActivity() {
         println("take photo")
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture ?: return
-
+        val gps = getLastKnownLocation()
+        val lat = gps[0]
+        val long = gps[1]
+        val label = flower_label
         // Create time stamped name and MediaStore entry.
         val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
             .format(System.currentTimeMillis())
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name+";"+label+";"+lat+";"+long)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
                 put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Plantie-Image")
@@ -304,9 +306,10 @@ class CameraActivity : AppCompatActivity() {
                     val realpath = getRealPathFromURI(photo_path!!).toString()
                     val filename = realpath.substring(realpath.lastIndexOf("/")+1);
                     val filepath = realpath.substring(0, realpath.lastIndexOf("/"));
-                    myEdit.putString(filename, label)
+                    myEdit.putString(filename, filename)
                     myEdit.putString("filepath", filepath)
                     myEdit.commit()
+
 
                     //exif
                     /*val inputStream = contentResolver.openInputStream(photo_path!!)
@@ -375,13 +378,6 @@ class CameraActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun uploadToDatabase(photo_path: Uri?, time: String?){
         println("Uploading to DB")
-        //val time = SimpleDateFormat(FILENAME_FORMAT).format(System.currentTimeMillis())
-        val gps = getLastKnownLocation()
-        val lat = gps[0]
-        val long = gps[1]
-
-        val label = flower_label
-
         val realpath = photo_path?.let { getRealPathFromURI(it) }
         Log.i("uploadToDatabase", realpath.toString())
         val options = StorageUploadFileOptions.builder()
@@ -389,10 +385,10 @@ class CameraActivity : AppCompatActivity() {
             .build()
 
         Amplify.Auth.fetchAuthSession(
-            {
-                Log.i("AmplifyCheckLogin", "Auth session = $it")
+            { authSession ->
+                Log.i("AmplifyCheckLogin", "Auth session = $authSession")
                 runOnUiThread(Runnable {
-                    if (it.isSignedIn){
+                    if (authSession.isSignedIn){
                         if (realpath != null && time != null) {
                             Amplify.Storage.uploadFile(time, File(realpath), options,
                                 {
@@ -401,6 +397,37 @@ class CameraActivity : AppCompatActivity() {
                                     Handler(Looper.getMainLooper()).post {
                                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
                                     }
+                                    /*//fetch newest sharedpreference
+                                    val session = authSession as AWSCognitoAuthSession
+                                    var id = session.identityId.value.toString()
+                                    Log.i("AmplifyCognito", "Cognito id: ${id}")
+
+
+                                    val sharedPreferences = getSharedPreferences("Plantie", MODE_PRIVATE)
+                                    val filenameIds = sharedPreferences.all.map { it.key }.toMutableList()
+                                    val filenameValues = sharedPreferences.all.map { it.value }.toMutableList()
+                                    val request = RestOptions.builder()
+                                        .addPath("/items")
+                                        .addQueryParameters(mapOf("id" to id))
+                                        .build()
+                                    Amplify.API.get(request,
+                                        {getResponse ->
+                                            Log.i("AmplifyAPI", "GET succeeded: ${getResponse.data.asString()}")
+                                            //then upload updated sharedpreference
+                                            val options = RestOptions.builder()
+                                                .addPath("/todo")
+                                                .addBody("{\"id\": \"${}\"}".toByteArray())
+                                                .build()
+                                            Amplify.API.post(options,
+                                                {postResponse ->
+                                                    Log.i("AmplifyAPI", "POST succeeded: ${postResponse.data.asString()}")
+                                                },
+                                                { Log.e("AmplifyAPI", "POST failed: ${it}") }
+                                            )
+                                        },
+                                        { Log.e("AmplifyAPI", "GET failed", it) }
+                                    )*/
+
                                 },
                                 {
                                     Log.e("AmplifyS3", "Upload failed", it)
