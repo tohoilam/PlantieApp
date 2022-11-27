@@ -21,10 +21,12 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.projects.plantie.InfoActivity
 import com.projects.plantie.MainActivity
 import com.projects.plantie.SignUpActivity
 import org.tensorflow.lite.examples.plantie.R
@@ -40,6 +42,8 @@ class RecognitionListViewModel : ViewModel(){
     fun updateData(recognitions: List<Recognition>){
         _recognitionList.postValue(recognitions)
     }
+
+
 
 }
 
@@ -58,7 +62,4 @@ data class Recognition(val label:String, val confidence:Float) {
     // Replace _ with a blank space for the flower name
     val out_label = label.replace('_', ' ').capitalize()
 
-    fun onClick(){
-        println("Redirecting to Page: ${ out_label }")
-    }
 }

@@ -24,7 +24,7 @@
     </data>
 
     <LinearLayout
-        android:layout_width="255sp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#CDB275"
         android:layout_gravity="top|center"
@@ -39,8 +39,8 @@
             android:text="@{recognitionItem.out_label}"
             android:textColor="@color/white"
             android:textAppearance="?attr/textAppearanceHeadline6"
-            android:onClick="@{() -> recognitionItem.onClick()}"
             tools:text="Flower" />
+<!--        android:onClick="@{() -> recognitionItem.onClick()}"-->
 
         <TextView
             android:id="@+id/recognitionProb"
