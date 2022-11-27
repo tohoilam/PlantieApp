@@ -1,16 +1,17 @@
 package com.projects.plantie
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.Environment
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintSet.Layout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amplifyframework.core.Amplify
@@ -30,6 +31,14 @@ class BrowseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_browse)
         gridLayout = findViewById(R.id.browse_box)
+
+        // Request storage permissions
+        if (allPermissionsGranted()) {
+        } else {
+            ActivityCompat.requestPermissions(
+                this, BrowseActivity.REQUIRED_PERMISSIONS, BrowseActivity.REQUEST_CODE_PERMISSIONS
+            )
+        }
 
         Amplify.Auth.fetchAuthSession(
             {
@@ -114,10 +123,14 @@ class BrowseActivity : AppCompatActivity() {
             filenameValues.remove(filepath)
             Log.i("LocalStorage", filenameIds.toString())
             Log.i("LocalStorage", filepath!!)
+            val temp = mutableListOf<String>()
+            filenameIds.forEach{item ->
+                temp.add(item.substring(0, item.lastIndexOf(".")))
+            }
             //compare local and cloud
-            var cloudExtra = cloudfilenameIds.minus(filenameIds)
+            var cloudExtra = cloudfilenameIds.minus(temp)
             Log.i("CloudSync: cloudextra", cloudExtra.toString())
-            var localExtra = filenameIds.minus(cloudfilenameIds)
+            var localExtra = temp.minus(cloudfilenameIds)
             Log.i("CloudSync: localextra", localExtra.toString())
             if (cloudExtra.isEmpty() && localExtra.isEmpty()){//completely sync
                 //nothing to do
@@ -129,7 +142,7 @@ class BrowseActivity : AppCompatActivity() {
                 val options = StorageDownloadFileOptions.builder()
                     .accessLevel(StorageAccessLevel.PRIVATE)
                     .build()
-                cloudExtra.forEach { item ->
+                /*cloudExtra.forEach { item ->
                     Log.i("CloudSync: cloud", "Cacheing ${item} to ${applicationContext.filesDir}, ${filepath}")
                     val file = File("${applicationContext.filesDir}/${item}.jpg")
                     Amplify.Storage.downloadFile(item, file, options,
@@ -142,7 +155,7 @@ class BrowseActivity : AppCompatActivity() {
                         },
                         { Log.e("CloudSync: cloud", "Download Failure", it) }
                     )
-                }
+                }*/
                 if (!localExtra.isEmpty()) {//local has more photos
                     //save local to cloud
                     Log.i("CloudSync: local", "local has more photos, sync attempt")
@@ -150,7 +163,8 @@ class BrowseActivity : AppCompatActivity() {
                         .accessLevel(StorageAccessLevel.PRIVATE)
                         .build()
                     localExtra.forEach { time ->
-                        Amplify.Storage.uploadFile(time, File(filepath), options,
+                        Log.i("AmplifyS3", "Trying to sync local to cloud from ${time}")
+                        Amplify.Storage.uploadFile(time, File(filepath+"/${time}.jpg"), options,
                             {
                                 Log.i("AmplifyS3", "Successfully uploaded: ${it.key}")
                                 var msg = "Image uploaded"
@@ -180,7 +194,7 @@ class BrowseActivity : AppCompatActivity() {
                 val cardList = arrayListOf<CardModel>()
 
                 for (i in filenameIds.indices) {
-                    val temp = filepath + "/" +filenameIds[i]
+                    val temp = filepath + "/" + filenameIds[i]
                     Log.i("CardList", temp)
                     Log.i("CardList", filenameValues[i].toString())
                     cardList.add(CardModel(R.drawable.lilyvalley, filenameValues[i].toString(), filenameIds[i].toString(), temp))
@@ -200,5 +214,24 @@ class BrowseActivity : AppCompatActivity() {
         intent = Intent(this, InfoActivity::class.java)
         intent.putExtra("flowerName", plantName);
         startActivity(intent)
+    }
+
+    private fun allPermissionsGranted(): Boolean = BrowseActivity.REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            baseContext, it
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    companion object {
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        private val REQUIRED_PERMISSIONS =
+            mutableListOf (
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+            ).apply {
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                }
+            }.toTypedArray()
     }
 }
