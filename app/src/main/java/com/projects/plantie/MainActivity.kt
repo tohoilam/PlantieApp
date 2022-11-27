@@ -1,7 +1,6 @@
 package com.projects.plantie
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,8 +8,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.amplifyframework.core.Amplify
 import org.tensorflow.lite.examples.plantie.R
+
 
 class MainActivity : AppCompatActivity() {
     private var openCameraButton: Button? = null
@@ -101,6 +102,8 @@ class MainActivity : AppCompatActivity() {
                         },
                         { error -> Log.e("AmplifyCheckLogin", "Failed to fetch auth session", error) }
                     )
+                    //val preferences = getSharedPreferences("Plantie", 0)
+                    //preferences.edit().clear().commit()
                 }
             },
             { Log.e("AuthQuickstart", "Sign out failed", it) }
