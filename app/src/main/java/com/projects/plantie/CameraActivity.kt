@@ -263,9 +263,10 @@ class CameraActivity : AppCompatActivity() {
         val label = flower_label
         // Create time stamped name and MediaStore entry.
         val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
-            .format(System.currentTimeMillis())
+            .format(System.currentTimeMillis())+";"+label+";"+lat+";"+long
+        println("name of takephoto file"+name)
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, name+";"+label+";"+lat+";"+long)
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
                 put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Plantie-Image")
