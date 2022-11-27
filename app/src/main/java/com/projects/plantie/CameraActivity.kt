@@ -53,6 +53,8 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.amplifyframework.api.rest.RestOptions
+import com.amplifyframework.auth.cognito.AWSCognitoAuthSession
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.storage.StorageAccessLevel
 import com.amplifyframework.storage.options.StorageUploadFileOptions
@@ -307,6 +309,7 @@ class CameraActivity : AppCompatActivity() {
                     myEdit.putString("filepath", filepath)
                     myEdit.commit()
 
+
                     //exif
                     /*val inputStream = contentResolver.openInputStream(photo_path!!)
                     if (inputStream != null) {
@@ -389,10 +392,10 @@ class CameraActivity : AppCompatActivity() {
             .build()
 
         Amplify.Auth.fetchAuthSession(
-            {
-                Log.i("AmplifyCheckLogin", "Auth session = $it")
+            { authSession ->
+                Log.i("AmplifyCheckLogin", "Auth session = $authSession")
                 runOnUiThread(Runnable {
-                    if (it.isSignedIn){
+                    if (authSession.isSignedIn){
                         if (realpath != null && time != null) {
                             Amplify.Storage.uploadFile(time, File(realpath), options,
                                 {
@@ -401,6 +404,30 @@ class CameraActivity : AppCompatActivity() {
                                     Handler(Looper.getMainLooper()).post {
                                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show()
                                     }
+                                    //fetch newest sharedpreference
+                                    val session = authSession as AWSCognitoAuthSession
+                                    Log.i("AmplifyCognito", "Cognito id: ${session.identityId}")
+                                    val request = RestOptions.builder()
+                                        .addPath("/items")
+                                        .addQueryParameters(mapOf("id" to session.identityId.toString()))
+                                        .build()
+
+                                    Amplify.API.get(request,
+                                        {
+                                            Log.i("AmplifyAPI", "GET succeeded: $it")
+                                            //then upload updated sharedpreference
+                                            val options = RestOptions.builder()
+                                                .addPath("/todo")
+                                                .addBody("{\"name\": \"Mow the lawn\"}".toByteArray())
+                                                .build()
+                                            Amplify.API.post(options,
+                                                { Log.i("MyAmplifyApp", "POST succeeded: $it") },
+                                                { Log.e("MyAmplifyApp", "POST failed", it) }
+                                            )
+                                        },
+                                        { Log.e("AmplifyAPI", "GET failed", it) }
+                                    )
+
                                 },
                                 {
                                     Log.e("AmplifyS3", "Upload failed", it)

@@ -45,5 +45,10 @@
             "Bucket": "plantie05638-dev",
             "Region": "ap-southeast-1"
         }
+    },
+    "DynamoDBObjectMapper": {
+        "Default": {
+            "Region": "ap-southeast-1"
+        }
     }
 }
