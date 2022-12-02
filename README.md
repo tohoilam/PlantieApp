@@ -1,10 +1,14 @@
 # PlantieApp
  
-## Amplify Setup
+## Overview
 
-1. Download Amplify CLI
-2. Ask Ivan for Access Key and Secret Key
-3. Delete .config folder in the **amplify** directory, if there is one
+
+
+## Setup
+
+1. Install Node and npm
+2. Install latest Amplify CLI with `npm install -g @aws-amplify/cli`
+3. Enter the credential of AWS IAM account. (Access Key and Secret Key available upon request)
 4. Run `amplify pull --appId d2s9xj50g7zouc --envName dev`
     - Choose `AWS access keys`
     - Enter Access Key
