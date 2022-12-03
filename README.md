@@ -47,7 +47,12 @@ User can take photo of flowers here with their camera. The photo will be stored 
  <img src="https://drive.google.com/uc?export=download&id=1-RB-h77AMfqBpGQbUO1qlwUaAlpJfDNk" width="200"/>
 </p>
 
-User will be able to see the history of photos taken here. The app will synchronize the list of images with the cloud when the user is logged in and there is an internet connection. When clicked on a photo, detail information of the plant will be displayed.
+User will be able to see the history of photos taken here. The app will synchronize the list of images with the cloud when the user is logged in and there is an internet connection. When clicked on a photo, detail information of the plant will be displayed, which includes:
+* Name of plants
+* Brief description of the plant
+* Image
+* Size of plants
+* Growing conditions
 
 
 **3. Map**
@@ -64,5 +69,5 @@ A map-based interface will be shown with images pinned on the map, which is the 
  <img src="https://drive.google.com/uc?export=download&id=1-malcG1yrev3G1hFHWA1m5HJJcoDaXtL" width="200"/>
 </p>
 
-User will be able to login and register their account here. After logging in, user will be able to save their images to cloud to prevent lost of data.
+User will be able to login and register their account here. For the registration, users are required to verify thheir email by clicking the confirmation link in the email we sent to you. After logging in, user will be able to save their images to cloud to prevent lost of data.
 The credential ssytem is developed with AWS Cognito, which is an all-in-one credential management service.
