@@ -9,7 +9,9 @@ With Plantie, you may:
 * Register and save the plants on cloud
 * View your capture history on map
 
-The application is developed with Kotlin on Android Studio. The backend is powered by Amazon Web Services Amplify.
+The application is developed with Kotlin on Android Studio.
+The backend is powered by Amazon Web Services Amplify.
+The object detection model is forked from TensorFlow.
 
 ## Setup
 
