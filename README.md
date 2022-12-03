@@ -27,6 +27,18 @@ The object detection model is forked from TensorFlow.
     - `Yes`
 4. Open emulator and test the app
 
-Or, alternatively, you may download the apk directly.
+Or, alternatively, you may download the apk directly and run on your Android device.
 
+## Functionalities
 
+1. Capture
+User can take photo of flowers here with their camera. The photo will be stored to gallery when the user clicked on the capture button in the bottom. Before taking photos, a category prediction will be displayed to indicate what type of flowers it is predicted to be.
+
+2. Browse
+User will be able to see the history of photos taken here. The app will synchronize the list of images with the cloud when the user is logged in and there is an internet connection. When clicked on a photo, detail information of the plant will be displayed.
+
+3. Map
+A map-based interface will be shown with images pinned on the map, which is the exact location the user took the photo. When clicked on it the info page will also be displayed.
+
+4. Login/Register
+User will be able to login and register their account here. After logging in, user will be able to save their images to cloud to prevent lost of data.
