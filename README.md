@@ -10,9 +10,9 @@ With Plantie, you may:
 * Register and save the plants on cloud
 * View your capture history on map
 
-The application is developed with Kotlin on Android Studio.
-The backend is powered by Amazon Web Services Amplify.
-The object detection model is forked from TensorFlow.
+The application is developed with **Kotlin** on Android Studio.
+The backend is powered by Amazon Web Services **Amplify**.
+The object detection model is forked from **TensorFlow**.
 
 ## Setup
 
@@ -41,7 +41,11 @@ User can take photo of flowers here with their camera. The photo will be stored 
 
 **2. Browse**
 
-<img src="https://drive.google.com/uc?export=download&id=1-YDTKJZGISQsv4OBf-cAX-ZHwAqoqbr_" width="200"/><img src="https://drive.google.com/uc?export=download&id=1-T-M3F5ZswcXblimmxY2sUjkkx-Ak_Wp" width="200"/><img src="https://drive.google.com/uc?export=download&id=1-RB-h77AMfqBpGQbUO1qlwUaAlpJfDNk" width="200"/>
+<p float="left">
+ <img src="https://drive.google.com/uc?export=download&id=1-YDTKJZGISQsv4OBf-cAX-ZHwAqoqbr_" width="200"/>
+ <img src="https://drive.google.com/uc?export=download&id=1-T-M3F5ZswcXblimmxY2sUjkkx-Ak_Wp" width="200"/>
+ <img src="https://drive.google.com/uc?export=download&id=1-RB-h77AMfqBpGQbUO1qlwUaAlpJfDNk" width="200"/>
+</p>
 
 User will be able to see the history of photos taken here. The app will synchronize the list of images with the cloud when the user is logged in and there is an internet connection. When clicked on a photo, detail information of the plant will be displayed.
 
@@ -55,6 +59,10 @@ A map-based interface will be shown with images pinned on the map, which is the 
 
 **4. Login/Register**
 
-<img src="https://drive.google.com/uc?export=download&id=1-gsT-TiN178sHfZ0hfKAH1mZ4loa5r7g" width="200"/><img src="https://drive.google.com/uc?export=download&id=1-malcG1yrev3G1hFHWA1m5HJJcoDaXtL" width="200"/>
+<p float="left">
+ <img src="https://drive.google.com/uc?export=download&id=1-gsT-TiN178sHfZ0hfKAH1mZ4loa5r7g" width="200"/>
+ <img src="https://drive.google.com/uc?export=download&id=1-malcG1yrev3G1hFHWA1m5HJJcoDaXtL" width="200"/>
+</p>
 
 User will be able to login and register their account here. After logging in, user will be able to save their images to cloud to prevent lost of data.
+The credential ssytem is developed with AWS Cognito, which is an all-in-one credential management service.
