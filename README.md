@@ -65,9 +65,9 @@ A map-based interface will be shown with images pinned on the map, which is the 
 **4. Login/Register**
 
 <p float="left">
- <img src="https://drive.google.com/uc?export=download&id=1-gsT-TiN178sHfZ0hfKAH1mZ4loa5r7g" width="200"/>
+ <img src="https://drive.google.com/uc?export=download&id=1VWMhxupEgiFUqUwXaPzqaVgdlzodVH61" width="200"/>
  <img src="https://drive.google.com/uc?export=download&id=1-malcG1yrev3G1hFHWA1m5HJJcoDaXtL" width="200"/>
 </p>
 
 User will be able to login and register their account here. For the registration, users are required to verify thheir email by clicking the confirmation link in the email we sent to you. After logging in, user will be able to save their images to cloud to prevent lost of data.
-The credential ssytem is developed with AWS Cognito, which is an all-in-one credential management service.
+The credential system is developed with AWS Cognito, which is an all-in-one credential management service.
