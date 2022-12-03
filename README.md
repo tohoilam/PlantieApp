@@ -28,7 +28,7 @@ The object detection model is forked from **TensorFlow**.
     - `Yes`
 4. Open emulator and test the app
 
-Or, alternatively, you may download the apk directly and run on your Android device.
+Or, alternatively, you may download the unsigned apk directly from our [latest release](https://github.com/tohoilam/PlantieApp/releases/tag/v1.0) and run on your Android device. 
 
 ## Functionalities
 
